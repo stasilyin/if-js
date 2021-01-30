@@ -1,0 +1,31 @@
+{
+  "name": "if-js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stasilyin/if-js.git"
+  },
+  "author": "Stanislau Ilyin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stasilyin/if-js/issues"
+  },
+  "homepage": "https://github.com/stasilyin/if-js#readme",
+  "devDependencies": {
+    "eslint": "^7.18.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "husky": "^4.3.8"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
+  }
+}
