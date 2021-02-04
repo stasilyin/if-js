@@ -3,13 +3,13 @@ console.log(user);
 
 let student = "Stas Ilyin";
 console.log(student);
-//Переменная student примит значение user
+//The student variable will be set to user
 student = user;
 console.log(user);
 
 let test = 1;
 test += 1;
-//Конкатенация
+//Concatenation
 test += "1";
 console.log(test);
 --test;
@@ -18,15 +18,19 @@ console.log(test);
 // true
 console.log(Boolean(test));
 
-function calculate(arr) {
-  return arr.reduce((accumulate, elem) => (accumulate *= elem));
+function multiplicationElem(arr) {
+    let arrSum = 1;
+    for (let i = 0; i<arr.length; i++) {
+        arrSum *= arr[i];
+      }
+      return arrSum;
 }
 
 function fiveToTen(arr) {
   let finalArr = [];
-  for (let value of arr) {
-    if (value > 5 && value < 10) {
-      finalArr.push(value);
+  for (let i = 0; i<arr.length; i++) {
+    if (arr[i] > 5 && arr[i] < 10) {
+      finalArr.push(arr[i]);
     }
   }
   return finalArr;
@@ -34,15 +38,14 @@ function fiveToTen(arr) {
 
 function arrModTwo(arr) {
   let finalArr = [];
-  for (let value of arr) {
-    if (!(value % 2)) {
-      finalArr.push(value);
+  for (let i = 0; i<arr.length; i++) {
+    if (!(arr[i] % 2)) {
+      finalArr.push(arr[i]);
     }
   }
   return finalArr;
 }
-console.log("Произведение чисел массива: " + calculate([2, 3, 5, 8]));
-console.log(
-  "Произведение чисел массива: " + fiveToTen([2, 5, 8, 15, 0, 6, 20, 3])
-);
-console.log("Четные числа массива: " + arrModTwo([2, 5, 8, 15, 0, 6, 20, 3]));
+
+console.log("Product of array numbers: " + multiplicationElem([2, 3, 5, 8]));
+console.log("The numbers in the array are greater than 5, but less than 10: " + fiveToTen([2, 5, 8, 15, 0, 6, 20, 3]));
+console.log("Even numbers of the array: " + arrModTwo([2, 5, 8, 15, 0, 6, 20, 3]));
