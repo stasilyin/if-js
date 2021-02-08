@@ -49,3 +49,55 @@ function arrModTwo(arr) {
 console.log("Product of array numbers: " + multiplicationElem([2, 3, 5, 8]));
 console.log("The numbers in the array are greater than 5, but less than 10: " + fiveToTen([2, 5, 8, 15, 0, 6, 20, 3]));
 console.log("Even numbers of the array: " + arrModTwo([2, 5, 8, 15, 0, 6, 20, 3]));
+
+console.log("-------------------------------");
+
+//polindrom
+
+let isPolindrome = (str) => {
+  str.toLowerCase();
+  return str === str.split('').reverse('').join('') ? 'Yes' : 'No';
+}
+
+function searchMinValue(...param) {
+  let minValue = param[0];
+  try {
+
+   for (let i = 1; i < param.length; i++) {
+    if (isNaN(param[i])) throw new Error ('Enter an array consisting of numbers');
+      param[i] < minValue ? minValue = param[i] : minValue;
+    }
+    return console.log(`In the array ${param} the min element is ${minValue}`);     
+  }
+  catch (e) {
+    console.log(e);
+  }
+}
+
+function searchMaxValue(...param) {
+  let maxValue = param[0];
+  try {
+    for (let i = 1; i < param.length; i++) {
+      if (isNaN(param[i])) throw new Error ('Enter an array consisting of numbers');
+      param[i] > maxValue ? maxValue = param[i] : maxValue;
+     }
+     return console.log(`In the array ${param} the max element is ${maxValue}`);   
+   }
+   catch (e) {
+     console.log(e);
+   }
+}
+
+function replaceZero() {
+  let arr = [];
+  for (let i = 0; i < 10; i++ ) {
+    arr.push(Math.round(Math.random() * 100 ));
+  }
+  arr = arr.join().replace(/0/g,'zero');
+  console.log(arr.split(','));
+}
+
+console.log ('The line is palindrome? ' + isPolindrome('asddsa'));
+replaceZero();
+searchMaxValue(3, 2, '12a', 1, 4, 10);
+searchMinValue(3, 2, '123', 124, 4, 10);
