@@ -63,7 +63,7 @@ function searchMinValue(...param) {
   let minValue = param[0];
   try {
 
-   for (i = 1; i < param.length; i++) {
+   for (let i = 1; i < param.length; i++) {
     if (isNaN(param[i])) throw new Error ('Enter an array consisting of numbers');
       param[i] < minValue ? minValue = param[i] : minValue;
     }
@@ -77,7 +77,7 @@ function searchMinValue(...param) {
 function searchMaxValue(...param) {
   let maxValue = param[0];
   try {
-    for (i = 1; i < param.length; i++) {
+    for (let i = 1; i < param.length; i++) {
       if (isNaN(param[i])) throw new Error ('Enter an array consisting of numbers');
       param[i] > maxValue ? maxValue = param[i] : maxValue;
      }
