@@ -50,20 +50,6 @@ console.log("Product of array numbers: " + multiplicationElem([2, 3, 5, 8]));
 console.log("The numbers in the array are greater than 5, but less than 10: " + fiveToTen([2, 5, 8, 15, 0, 6, 20, 3]));
 console.log("Even numbers of the array: " + arrModTwo([2, 5, 8, 15, 0, 6, 20, 3]));
 
-function sumTwoValue(a) {
-  return (b) =>  {
-    try {
-      if (isNaN(a) || isNaN(b)) throw new Error ('You enter not a number');
-      return console.log(`Sum of numbers ${a} and ${b} =  ${a+b}`);
-    }
-    catch(e) {
-      console.error(e);
-    }
-  }
-}
-
-sumTwoValue(2)(3);
-
 const pOne = document.getElementById ('text1');
 const pTwo = document.getElementById ('text2');
 const pThree = document.getElementById ('text3');
@@ -71,12 +57,12 @@ const colors = ['magenta', 'cyan', 'firebrick', 'springgreen', 'skyblue'];
 let currentColor;
 
 function changeColor(e) {
-      currentColor = e.target.style.color;
-      if (currentColor == '' || colors.indexOf(currentColor) == colors.length-1) {
-        e.target.style.color = colors[0]
-      }  else {
-        e.target.style.color = colors[colors.indexOf(currentColor)+1];
-      }
+  currentColor = e.target.style.color;
+  if (currentColor == '' || colors.indexOf(currentColor) == colors.length-1) {
+    e.target.style.color = colors[0]
+  }  else {
+    e.target.style.color = colors[colors.indexOf(currentColor)+1];
+  }
 }
 
 pOne.addEventListener('click', changeColor); 
