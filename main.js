@@ -120,3 +120,75 @@ function changeColor(e) {
 pOne.addEventListener('click', changeColor);
 pTwo.addEventListener('click', changeColor);
 pThree.addEventListener('click', changeColor);
+
+function isDate(date) {
+  const reg = /((([0-9][0-9][0-9][1-9])|([1-9][0-9][0-9][0-9])|([0-9][1-9][0-9][0-9])|([0-9][0-9][1-9][0-9]))-((0[13578])|(1[02]))-((0[1-9])|([12][0-9])|(3[01])))|((([0-9][0-9][0-9][1-9])|([1-9][0-9][0-9][0-9])|([0-9][1-9][0-9][0-9])|([0-9][0-9][1-9][0-9]))-((0[469])|11)-((0[1-9])|([12][0-9])|(30)))|(((000[48])|([0-9]0-9)|([0-9][1-9][02468][048])|([1-9][0-9][02468][048]))-02-((0[1-9])|([12][0-9])))|((([0-9][0-9][0-9][1-9])|([1-9][0-9][0-9][0-9])|([0-9][1-9][0-9][0-9])|([0-9][0-9][1-9][0-9]))-02-((0[1-9])|([1][0-9])|([2][0-8])))/;
+  return reg.test(date);
+}
+function changeFormatDate(dateIn) {
+  if (!(isDate(dateIn))) return 'Enter date in format yyyy-mm-dd';
+  const dateOut = new Date(dateIn);
+  return dateOut.getDate() + '.' + (dateOut.getMonth() + 1) + '.' + dateOut.getFullYear();
+}
+console.log(changeFormatDate('2020/11/21'));
+
+const data = [
+  {
+    country: 'Russia',
+    city: 'Saint Petersburg',
+    hotel: 'Hotel Leopold',
+  },
+  {
+    country: 'Spain',
+    city: 'Santa Cruz de Tenerife',
+    hotel: 'Apartment Sunshine',
+  },
+  {
+    country: 'Slowakia',
+    city: 'Vysokie Tatry',
+    hotel: 'Villa Kunerad',
+  },
+  {
+    country: 'Germany',
+    city: 'Berlin',
+    hotel: 'Hostel Friendship',
+  },
+  {
+    country: 'Indonesia',
+    city: 'Bali',
+    hotel: 'Ubud Bali Resort&SPA',
+  },
+  {
+    country: 'Netherlands',
+    city: 'Rotterdam',
+    hotel: 'King Kong Hostel',
+  },
+  {
+    country: 'Marocco',
+    city: 'Ourika',
+    hotel: 'Rokoko Hotel',
+  },
+  {
+    country: 'Germany',
+    city: 'Berlin',
+    hotel: 'Hotel Rehberge Berlin Mitte',
+  },
+];
+
+function searchData(searchText) {
+  let searchResult = '';
+  let count = 0;
+  const text = new RegExp(`.*${searchText}+.*`, 'gim');
+  for (let i = 0; i < data.length; i++) {
+    const currentValue = data[i].country + data[i].city + data[i].hotel;
+    if (!(currentValue.search(text))) {
+      searchResult += `Country: ${data[i].country}
+      City: ${data[i].city}
+      Hotel: ${data[i].hotel}\n------------\n`;
+      count++;
+    }
+  }
+  searchResult += `Found ${count} values on request '${searchText}'`;
+  return searchResult;
+}
+console.log(searchData('er'));
