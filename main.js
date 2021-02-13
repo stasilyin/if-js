@@ -191,4 +191,4 @@ function searchData(searchText) {
   searchResult += `Found ${count} values on request '${searchText}'`;
   return searchResult;
 }
-console.log(searchData(''));
+console.log(searchData('Hostel'));
