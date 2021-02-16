@@ -360,15 +360,14 @@ function countryOfCity() {
     if (!(result[tempValue])) {
       arr.push(currentValue.city);
       result[tempValue] = arr;
-    } else {
-      if (!(result[tempValue].includes(currentValue.city)));
+    } else if (!(result[tempValue].includes(currentValue.city))) {
       result[tempValue].push(currentValue.city);
     }
     return result;
   }, {});
 }
 console.log(countryOfCity());
-
+console.log('**********lesson - 6 [Task 8]************');
 function getCalendarMonth(daysInMonth, daysInWeek, dayOfWeek) {
   try {
     if (dayOfWeek > daysInWeek) throw new Error('День начала недели больше количества дней в неделе');
@@ -411,4 +410,4 @@ function getCalendarMonth(daysInMonth, daysInWeek, dayOfWeek) {
     return e;
   }
 }
-console.log(getCalendarMonth(30, 7, 7));
+console.log(getCalendarMonth(30, 7, 3));
