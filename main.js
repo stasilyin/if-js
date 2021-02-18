@@ -53,11 +53,6 @@ console.log('-------------------------------');
 
 //  polindrom
 
-const isPolindrome = (str) => {
-  str.toLowerCase();
-  return str === str.split('').reverse('').join('') ? 'Yes' : 'No';
-};
-
 function searchMinValue(...param) {
   let minValue = param[0];
   try {
@@ -97,7 +92,6 @@ function replaceZero() {
   console.log(arr.split(','));
 }
 
-console.log(isPolindrome('asddsa'));
 replaceZero();
 searchMaxValue(3, 2, '12a', 1, 4, 10);
 searchMinValue(3, 2, '123', 124, 4, 10);
@@ -130,6 +124,19 @@ function changeFormatDate(dateIn) {
   return dateIn.split('-').reverse().join('.');
 }
 console.log(changeFormatDate('2020-11-21'));
+
+// homework lesson-6
+
+// Task 5
+console.log('**********lesson - 6 [Task 5]************');
+
+const isPolindrome = (str) => {
+  str.toLowerCase();
+  return str === str.split('').reverse('').join('') ? 'Yes' : 'No';
+};
+console.log('This line is polyindrome? ' + isPolindrome('шалаш'));
+
+console.log('**********lesson - 6 [Task 6]************');
 
 const data = [
   {
@@ -175,19 +182,232 @@ const data = [
 ];
 
 function searchData(searchText) {
-  let searchResult = '';
-  let count = 0;
   const text = new RegExp(`.*${searchText}+.*`, 'gim');
-  for (let i = 0; i < data.length; i++) {
-    const currentValue = data[i].country + data[i].city + data[i].hotel;
-    if (!(currentValue.search(text))) {
-      searchResult += `Country: ${data[i].country}
-      City: ${data[i].city}
-      Hotel: ${data[i].hotel}\n------------\n`;
-      count++;
+  const result = [];
+  data.forEach((currentValue) => {
+    const tempValue = currentValue.country + currentValue.city + currentValue.hotel;
+    if (!(tempValue.search(text))) {
+      result.push(currentValue);
     }
-  }
-  searchResult += `Found ${count} values on request '${searchText}'`;
-  return searchResult;
+  });
+  return result;
 }
 console.log(searchData('Hostel'));
+
+console.log('**********lesson - 6 [Task 7]************');
+const hotels = [
+  {
+    name: 'Hotel Leopold',
+    city: 'Saint Petersburg',
+    country: 'Russia',
+  },
+  {
+    name: 'Apartment Sunshine',
+    city: 'Santa Cruz de Tenerife',
+    country: 'Spain',
+  },
+  {
+    name: 'Villa Kunerad',
+    city: 'Vysokie Tatry',
+    country: 'Slowakia',
+  },
+  {
+    name: 'Hostel Friendship',
+    city: 'Berlin',
+    country: 'Germany',
+  },
+  {
+    name: 'Radisson Blu Hotel',
+    city: 'Kyiv',
+    country: 'Ukraine',
+  },
+  {
+    name: 'Paradise Hotel',
+    city: 'Guadalupe',
+    country: 'Mexico',
+  },
+  {
+    name: 'Hotel Grindewald',
+    city: 'Interlaken',
+    country: 'Switzerland',
+  },
+  {
+    name: 'The Andaman Resort',
+    city: 'Port Dickson',
+    country: 'Malaysia',
+  },
+  {
+    name: 'Virgin Hotel',
+    city: 'Chicago',
+    country: 'USA',
+  },
+  {
+    name: 'Grand Beach Resort',
+    city: 'Dubai',
+    country: 'United Arab Emirates',
+  },
+  {
+    name: 'Shilla Stay',
+    city: 'Seoul',
+    country: 'South Korea',
+  },
+  {
+    name: 'San Firenze Suites',
+    city: 'Florence',
+    country: 'Italy',
+  },
+  {
+    name: 'The Andaman Resort',
+    city: 'Port Dickson',
+    country: 'Malaysia',
+  },
+  {
+    name: 'Black Penny Villas',
+    city: 'BTDC, Nuca Dua',
+    country: 'Indonesia',
+  },
+  {
+    name: 'Koko Hotel',
+    city: 'Tokyo',
+    country: 'Japan',
+  },
+  {
+    name: 'Ramada Plaza',
+    city: 'Istanbul',
+    country: 'Turkey',
+  },
+  {
+    name: 'Waikiki Resort Hotel',
+    city: 'Hawaii',
+    country: 'USA',
+  },
+  {
+    name: 'Puro Hotel',
+    city: 'Krakow',
+    country: 'Poland',
+  },
+  {
+    name: 'Asma Suites',
+    city: 'Santorini',
+    country: 'Greece',
+  },
+  {
+    name: 'Cityden Apartments',
+    city: 'Amsterdam',
+    country: 'Netherlands',
+  },
+  {
+    name: 'Mandarin Oriental',
+    city: 'Miami',
+    country: 'USA',
+  },
+  {
+    name: 'Concept Terrace Hotel',
+    city: 'Rome',
+    country: 'Italy',
+  },
+  {
+    name: 'Ponta Mar Hotel',
+    city: 'Fortaleza',
+    country: 'Brazil',
+  },
+  {
+    name: 'Four Seasons Hotel',
+    city: 'Sydney',
+    country: 'Australia',
+  },
+  {
+    name: 'Le Meridien',
+    city: 'Nice',
+    country: 'France',
+  },
+  {
+    name: 'Apart Neptun',
+    city: 'Gdansk',
+    country: 'Poland',
+  },
+  {
+    name: 'Lux Isla',
+    city: 'Ibiza',
+    country: 'Spain',
+  },
+  {
+    name: 'Nox Hostel',
+    city: 'London',
+    country: 'UK',
+  },
+  {
+    name: 'Leonardo Vienna',
+    city: 'Vienna',
+    country: 'Austria',
+  },
+  {
+    name: 'Adagio Aparthotel',
+    city: 'Edinburgh',
+    country: 'UK',
+  },
+  {
+    name: 'Steigenberger Hotel',
+    city: 'Hamburg',
+    country: 'Germany',
+  },
+];
+
+function countryOfCity() {
+  return hotels.reduce((result, currentValue) => {
+    const tempValue = currentValue.country;
+    const arr = [];
+    if (!(result[tempValue])) {
+      arr.push(currentValue.city);
+      result[tempValue] = arr;
+    } else if (!(result[tempValue].includes(currentValue.city))) {
+      result[tempValue].push(currentValue.city);
+    }
+    return result;
+  }, {});
+}
+console.log(countryOfCity());
+console.log('**********lesson - 6 [Task 8]************');
+function getCalendarMonth(daysInMonth, daysInWeek, dayOfWeek) {
+  try {
+    if (dayOfWeek > daysInWeek) throw new Error('День начала недели больше количества дней в неделе');
+    const result = [];
+    let countDays = 1;
+    for (let i = 0; i < Math.ceil(daysInMonth / daysInWeek); i++) {
+      result[i] = [];
+    }
+    if (dayOfWeek !== 1) {
+      countDays = daysInMonth - (dayOfWeek - 1);
+    }
+    for (let i = 0; i < result.length; i++) {
+      for (let j = 0; j < daysInWeek; j++) {
+        if (countDays > daysInMonth) {
+          countDays = 1;
+          result[i].push(countDays);
+        } else {
+          result[i].push(countDays);
+        }
+        countDays++;
+      }
+    }
+    if (!(result[result.length - 1].includes(daysInMonth))) {
+      result.push([]);
+      for (let i = result.length - 1; i < result.length; i++) {
+        countDays = result[result.length - 2][daysInWeek - 1] + 1;
+        for (let j = 0; j < daysInWeek; j++) {
+          if (countDays > daysInMonth) {
+            countDays = 1;
+            result[i].push(countDays);
+          } else {
+            result[i].push(countDays);
+          }
+          countDays++;
+        }
+      }
+    }
+    return result;
+  } catch (e) {
+    return e;
+  }
+}
+console.log(getCalendarMonth(30, 7, 3));

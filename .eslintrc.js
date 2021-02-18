@@ -12,6 +12,7 @@ module.exports = {
   rules: {
     "no-plusplus": 0,
     'prefer-template': "warn",
-    'prefer-destructuring':'warn'
+    'prefer-destructuring':'warn',
+    'no-param-reassign':'warn',
   },
 };
