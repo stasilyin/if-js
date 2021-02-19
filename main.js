@@ -367,47 +367,142 @@ function countryOfCity() {
   }, {});
 }
 console.log(countryOfCity());
-console.log('**********lesson - 6 [Task 8]************');
-function getCalendarMonth(daysInMonth, daysInWeek, dayOfWeek) {
+console.log('**********lesson - 7 [Task 6]************');
+function getCalendarMonth(daysInMonth, daysInWeek, dayOfWeek,checkInOut) {
+  const {checkInDay, checkOutDay} = checkInOut;
   try {
     if (dayOfWeek > daysInWeek) throw new Error('День начала недели больше количества дней в неделе');
     const result = [];
     let countDays = 1;
+    
     for (let i = 0; i < Math.ceil(daysInMonth / daysInWeek); i++) {
       result[i] = [];
     }
     if (dayOfWeek !== 1) {
       countDays = daysInMonth - (dayOfWeek - 1);
     }
+    
     for (let i = 0; i < result.length; i++) {
       for (let j = 0; j < daysInWeek; j++) {
+        const day = {dayOfMonth:countDays, notCurrentMonth:false, selectedDay:false};
         if (countDays > daysInMonth) {
           countDays = 1;
-          result[i].push(countDays);
+          result[i].push(day);
         } else {
-          result[i].push(countDays);
+          result[i].push(day);
+          
+        }
+        if (result[0][j].dayOfMonth > 7) {
+          result[0][j].notCurrentMonth = true;
+        }
+        if (result[i][j].dayOfMonth >= checkInDay && result[i][j].dayOfMonth <= checkOutDay && result[i][j].notCurrentMonth === false) {
+          result[i][j].selectedDay = true;
         }
         countDays++;
       }
     }
-    if (!(result[result.length - 1].includes(daysInMonth))) {
-      result.push([]);
+    const isLastDayLastWeek = () => {
       for (let i = result.length - 1; i < result.length; i++) {
-        countDays = result[result.length - 2][daysInWeek - 1] + 1;
         for (let j = 0; j < daysInWeek; j++) {
-          if (countDays > daysInMonth) {
-            countDays = 1;
-            result[i].push(countDays);
-          } else {
-            result[i].push(countDays);
-          }
-          countDays++;
+          if(result[i][j].dayOfMonth == daysInMonth) return true;
+          return false;
         }
       }
     }
+   
+    if (isLastDayLastWeek) {
+      result.push([]);
+      for (let i = result.length - 1; i < result.length; i++) {
+        countDays = result[result.length - 2][daysInWeek - 1].dayOfMonth + 1;
+        for (let j = 0; j < daysInWeek; j++) {
+          if (countDays > daysInMonth) {
+            countDays = 1;
+            const day = {dayOfMonth:countDays, notCurrentMonth:false, selectedDay:false};
+          result[i].push(day);
+          } else {
+            const day = {dayOfMonth:countDays, notCurrentMonth:false, selectedDay:false}; 
+            result[i].push(day);
+          }
+          if (result[result.length - 1][j].dayOfMonth < 7 ) {
+            result[result.length-1][j].notCurrentMonth = true;
+          }
+          if (result[i][j].dayOfMonth >= checkInDay && result[i][j].dayOfMonth <= checkOutDay && result[i][j].notCurrentMonth === false) result[i][j].selectedDay = true;
+          countDays++;
+        }
+      }
+    } 
     return result;
   } catch (e) {
     return e;
   }
 }
-console.log(getCalendarMonth(30, 7, 3));
+console.log(getCalendarMonth(30, 7, 6, {checkInDay: 23, checkOutDay: 26}));
+console.log('**********lesson - 7 [Deep Equel]************');
+const obj1 = {
+  a: 'a',
+  b: {
+    a: 'a',
+    b: 'b',
+    c: {
+      a: 1,
+    },
+  },
+};
+const obj2 = {
+  b: {
+    c: {
+      a: 1,
+    },
+    b: 'b',
+    a: 'a',
+  },
+  a: 'a',
+};
+const obj3 = {
+  a: 'a',
+  b: {
+    a: 'a',
+    b: 'b',
+    c: {
+      a: 1,
+    },
+  },
+};
+
+const deepEqual = (object1, object2) => {
+  const isParametrsObject = typeof object1 !== "object" || typeof object2 !== "object";
+  const isParametrsUndefined = object1 === undefined || object2 === undefined;
+  const isParametrsNull = object1 === null || object2 === null;
+
+  if (isParametrsObject) {
+    return false;
+  }
+  if (isParametrsUndefined) {
+    return false;
+  }
+  if (isParametrsNull) {
+    return false;
+  }
+
+  const object1Keys = Object.keys(object1);
+  const object2Keys = Object.keys(object2);
+
+  for (let i = 0; i < object1Keys.length; i++) {
+    if (object2Keys.includes(object1Keys[i]) === false) {
+      return false;
+    }
+  }
+  for (let i = 0; i < object1Keys.length; i++) {
+    if (typeof object1[object1Keys[i]] === "object") {
+      return deepEqual(object1[object1Keys[i]], object2[object1Keys[i]]);
+    }
+    if (object1[object1Keys[i]] !== object2[object2Keys[i]]) {
+      return false;
+    }
+  }
+  return true;
+}
+
+console.log(deepEqual(obj1, obj2)); 
+console.log(deepEqual(obj1, obj3)); 
+
