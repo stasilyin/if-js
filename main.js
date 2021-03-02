@@ -96,7 +96,8 @@ replaceZero();
 searchMaxValue(3, 2, '12a', 1, 4, 10);
 searchMinValue(3, 2, '123', 124, 4, 10);
 console.log('---------------------');
-const pOne = document.getElementById('text1');
+// old variant
+/* const pOne = document.getElementById('text1');
 const pTwo = document.getElementById('text2');
 const pThree = document.getElementById('text3');
 const colors = ['magenta', 'cyan', 'firebrick', 'springgreen', 'skyblue'];
@@ -113,7 +114,7 @@ function changeColor(e) {
 
 pOne.addEventListener('click', changeColor);
 pTwo.addEventListener('click', changeColor);
-pThree.addEventListener('click', changeColor);
+pThree.addEventListener('click', changeColor); */
 // homework lesson-5
 function isDate(date) {
   const reg = /((([0-9][0-9][0-9][1-9])|([1-9][0-9][0-9][0-9])|([0-9][1-9][0-9][0-9])|([0-9][0-9][1-9][0-9]))-((0[13578])|(1[02]))-((0[1-9])|([12][0-9])|(3[01])))|((([0-9][0-9][0-9][1-9])|([1-9][0-9][0-9][0-9])|([0-9][1-9][0-9][0-9])|([0-9][0-9][1-9][0-9]))-((0[469])|11)-((0[1-9])|([12][0-9])|(30)))|(((000[48])|([0-9]0-9)|([0-9][1-9][02468][048])|([1-9][0-9][02468][048]))-02-((0[1-9])|([12][0-9])))|((([0-9][0-9][0-9][1-9])|([1-9][0-9][0-9][0-9])|([0-9][1-9][0-9][0-9])|([0-9][0-9][1-9][0-9]))-02-((0[1-9])|([1][0-9])|([2][0-8])))/;
@@ -430,6 +431,11 @@ function getCalendarMonth(daysInMonth, daysInWeek, dayOfWeek, checkInOut) {
         if (result[i][j].dayOfMonth >= checkInDay &&
         result[i][j].dayOfMonth <= checkOutDay &&
         result[i][j].notCurrentMonth === false) result[i][j].selectedDay = true; 
+        if (new Date().getDate() === result[i][j].dayOfMonth && result[i][j].notCurrentMonth === false) {
+          result[i][j].currentDay = true;
+        } else {
+          result[i][j].currentDay = false;
+        }
       }
     }
     return result;
@@ -437,7 +443,7 @@ function getCalendarMonth(daysInMonth, daysInWeek, dayOfWeek, checkInOut) {
     return e;
   }
 }
-console.log(getCalendarMonth(31, 7, 6, { checkInDay: 20, checkOutDay: 24 }));
+console.log(getCalendarMonth(31, 7, 1, { checkInDay: 20, checkOutDay: 24 }));
 console.log('**********lesson - 7 [Deep Equel]************');
 const obj1 = {
   a: 'a',
@@ -549,3 +555,37 @@ class Students {
 
 const stud = new Students(studentsData);
 console.log(stud.getInfo())
+
+const pOne = document.getElementById('text1');
+const pTwo = document.getElementById('text2');
+const pThree = document.getElementById('text3'); 
+const colors = {
+  data: ['magenta', 'cyan', 'firebrick', 'springgreen', 'skyblue'],
+  index: 0,
+  [Symbol.iterator]() {
+    return this;
+  },
+  next() {
+    const arrLength = this.data.length;
+    if (this.index < arrLength) {
+      return {
+        done: false,
+        value: this.data[this.index++]
+      }
+    } else {
+      this.index = 0;
+      return {
+        done: false,
+        value: this.data[this.index++]
+      };
+    }
+  }
+ };
+
+const changeColor = event => {
+  event.target.style.color = colors.next().value;
+}
+
+pOne.addEventListener('click', changeColor);
+pTwo.addEventListener('click', changeColor);
+pThree.addEventListener('click', changeColor); 
