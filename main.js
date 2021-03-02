@@ -369,7 +369,7 @@ function countryOfCity() {
 }
 console.log(countryOfCity());
 console.log('**********lesson - 7 [Task 6]************');
-function getCalendarMonth(daysInMonth, daysInWeek, dayOfWeek, checkInOut) { 
+function getCalendarMonth(daysInMonth, daysInWeek, dayOfWeek, checkInOut) {
   try {
     const { checkInDay, checkOutDay } = checkInOut;
     if (dayOfWeek > daysInWeek) throw new Error('День начала недели больше количества дней в неделе');
@@ -385,10 +385,9 @@ function getCalendarMonth(daysInMonth, daysInWeek, dayOfWeek, checkInOut) {
       for (let j = 0; j < daysInWeek; j++) {
         if (countDays > daysInMonth) {
           countDays = 1;
-        } 
-        day = { dayOfMonth: countDays, notCurrentMonth: false, selectedDay: false };
+        }
+        const day = { dayOfMonth: countDays, notCurrentMonth: false, selectedDay: false };
         result[i].push(day);
-      
         if (result[0][j].dayOfMonth > 7) {
           result[0][j].notCurrentMonth = true;
         }
@@ -404,9 +403,9 @@ function getCalendarMonth(daysInMonth, daysInWeek, dayOfWeek, checkInOut) {
         for (let j = 0; j < daysInWeek; j++) {
           if (result[i][j].dayOfMonth === daysInMonth) {
             return true;
+          }
         }
       }
-    }
       return false;
     };
     if (!isLastDayLastWeek()) {
@@ -417,21 +416,23 @@ function getCalendarMonth(daysInMonth, daysInWeek, dayOfWeek, checkInOut) {
           if (countDays > daysInMonth) {
             countDays = 1;
           }
-          day = { dayOfMonth: countDays, notCurrentMonth: false, selectedDay: false };
+          const day = { dayOfMonth: countDays, notCurrentMonth: false, selectedDay: false };
           result[i].push(day);
           countDays++;
         }
       }
-    } 
+    }
     for (let i = 0; i < result.length; i++) {
       for (let j = 0; j < daysInWeek; j++) {
-        if (result[result.length - 1][j].dayOfMonth >= 1 && result[result.length - 1][j].dayOfMonth <= 7) {
-            result[result.length - 1][j].notCurrentMonth = true;
-          } 
-        if (result[i][j].dayOfMonth >= checkInDay &&
-        result[i][j].dayOfMonth <= checkOutDay &&
-        result[i][j].notCurrentMonth === false) result[i][j].selectedDay = true; 
-        if (new Date().getDate() === result[i][j].dayOfMonth && result[i][j].notCurrentMonth === false) {
+        if (result[result.length - 1][j].dayOfMonth >= 1
+            && result[result.length - 1][j].dayOfMonth <= 7) {
+          result[result.length - 1][j].notCurrentMonth = true;
+        }
+        if (result[i][j].dayOfMonth >= checkInDay
+            && result[i][j].dayOfMonth <= checkOutDay
+            && result[i][j].notCurrentMonth === false) result[i][j].selectedDay = true;
+        if (new Date().getDate() === result[i][j].dayOfMonth
+            && result[i][j].notCurrentMonth === false) {
           result[i][j].currentDay = true;
         } else {
           result[i][j].currentDay = false;
@@ -493,7 +494,7 @@ const deepEqual = (objectOne, objectTwo) => {
   return true;
 };
 console.log(deepEqual(obj1, obj2));
-console.log(deepEqual(obj1, obj3)); 
+console.log(deepEqual(obj1, obj3));
 
 const studentsData = [
   {
@@ -519,46 +520,44 @@ const studentsData = [
     lastName: 'Петров',
     admissionYear: 2019,
     courseName: 'Android',
-  }
+  },
 ];
 class User {
-  constructor (param) {
-    this._firstName = param.firstName;
-    this._lastName = param.lastName;
+  constructor(param) {
+    this.firstName = param.firstName;
+    this.lastName = param.lastName;
   }
-  get fullName () {
-    return this._firstName + ' ' + this._lastName;
+  get fullName() {
+    return this.firstName + ' ' + this.lastName;
   }
 }
 class Student extends User {
-  constructor (param) {
+  constructor(param) {
     super(param);
-    this._admissionYear = param.admissionYear;
+    this.admissionYear = param.admissionYear;
     this.courseName = param.courseName;
   }
   get course() {
-    return (new Date()).getFullYear() - this._admissionYear;
-  } 
+    return (new Date()).getFullYear() - this.admissionYear;
+  }
 }
 
 class Students {
-  constructor (studentsData) {
+  constructor(studentsData) {
     this.studentsData = studentsData;
   }
-  
   getInfo () {
-    return this.studentsData.sort((oneStudent, twoStudent) => new Student (oneStudent).course - new Student (twoStudent).course).map(currentValue =>
-         new User (currentValue).fullName + ' - ' + new Student (currentValue).courseName + ', ' + new Student (currentValue).course + ' курс');
+    return this.studentsData.sort((oneStudent, twoStudent) =>
+      new Student(oneStudent).course - new Student(twoStudent).course).map(currentValue =>
+      new User(currentValue).fullName + ' - ' + new Student(currentValue).courseName + ', ' + new Student(currentValue).course + ' курс');
   }
 }
-
-
 const stud = new Students(studentsData);
-console.log(stud.getInfo())
+console.log(stud.getInfo());
 
 const pOne = document.getElementById('text1');
 const pTwo = document.getElementById('text2');
-const pThree = document.getElementById('text3'); 
+const pThree = document.getElementById('text3');
 const colors = {
   data: ['magenta', 'cyan', 'firebrick', 'springgreen', 'skyblue'],
   index: 0,
@@ -570,22 +569,22 @@ const colors = {
     if (this.index < arrLength) {
       return {
         done: false,
-        value: this.data[this.index++]
-      }
+        value: this.data[this.index++],
+      };
     } else {
       this.index = 0;
       return {
         done: false,
-        value: this.data[this.index++]
+        value: this.data[this.index++],
       };
     }
-  }
- };
+  },
+};
 
 const changeColor = event => {
   event.target.style.color = colors.next().value;
-}
+};
 
 pOne.addEventListener('click', changeColor);
 pTwo.addEventListener('click', changeColor);
-pThree.addEventListener('click', changeColor); 
+pThree.addEventListener('click', changeColor);
