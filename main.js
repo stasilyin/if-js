@@ -560,31 +560,31 @@ const pTwo = document.getElementById('text2');
 const pThree = document.getElementById('text3');
 const colors = {
   data: ['magenta', 'cyan', 'firebrick', 'springgreen', 'skyblue'],
-  index: 0,
   [Symbol.iterator]() {
     return this;
   },
-  next() {
+  next(currentColor) {
+    let index = this.data.indexOf(currentColor);
     const arrLength = this.data.length;
-    if (this.index < arrLength) {
+      if (index === - 1 || index === arrLength - 1) {
+        index = 0;
+      } else {
+        index++;
+      }
       return {
         done: false,
-        value: this.data[this.index++],
+        value: this.data[index++],
       };
-    } else {
-      this.index = 0;
-      return {
-        done: false,
-        value: this.data[this.index++],
-      };
-    }
-  },
+    
+}
 };
-
 const changeColor = event => {
-  event.target.style.color = colors.next().value;
+  const elemId = event.target.id;
+  const cColor = document.getElementById(elemId).style.color;
+  event.target.style.color = colors.next(cColor).value;
 };
 
 pOne.addEventListener('click', changeColor);
 pTwo.addEventListener('click', changeColor);
 pThree.addEventListener('click', changeColor);
+
