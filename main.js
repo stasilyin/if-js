@@ -139,7 +139,7 @@ console.log('This line is polyindrome? ' + isPolindrome('шалаш'));
 
 console.log('**********lesson - 6 [Task 6]************');
 
-const data = [
+const hotelData = [
   {
     country: 'Russia',
     city: 'Saint Petersburg',
@@ -185,7 +185,7 @@ const data = [
 function searchData(searchText) {
   const text = new RegExp(`.*${searchText}+.*`, 'gim');
   const result = [];
-  data.forEach((currentValue) => {
+  hotelData.forEach((currentValue) => {
     const tempValue = currentValue.country + currentValue.city + currentValue.hotel;
     if (!(tempValue.search(text))) {
       result.push(currentValue);
@@ -546,7 +546,7 @@ class Students {
   constructor(studentsData) {
     this.studentsData = studentsData;
   }
-  getInfo () {
+  getInfo() {
     return this.studentsData.sort((oneStudent, twoStudent) =>
       new Student(oneStudent).course - new Student(twoStudent).course).map(currentValue =>
       new User(currentValue).fullName + ' - ' + new Student(currentValue).courseName + ', ' + new Student(currentValue).course + ' курс');
@@ -566,17 +566,16 @@ const colors = {
   next(currentColor) {
     let index = this.data.indexOf(currentColor);
     const arrLength = this.data.length;
-      if (index === - 1 || index === arrLength - 1) {
-        index = 0;
-      } else {
-        index++;
-      }
-      return {
-        done: false,
-        value: this.data[index++],
-      };
-    
-}
+    if (index === -1 || index === arrLength - 1) {
+      index = 0;
+    } else {
+      index++;
+    }
+    return {
+      done: false,
+      value: this.data[index++],
+    };
+  },
 };
 const changeColor = event => {
   const elemId = event.target.id;
@@ -588,3 +587,73 @@ pOne.addEventListener('click', changeColor);
 pTwo.addEventListener('click', changeColor);
 pThree.addEventListener('click', changeColor);
 
+const data = [
+  {
+    name: 'Hotel Leopold',
+    city: 'Saint Petersburg',
+    country: 'Russia',
+    imageUrl: 'https://res.cloudinary.com/intellectfox/image/upload/v1610379365/fe/hotel-leopold_mflelk.jpg',
+  },
+  {
+    name: 'Apartment Sunshine',
+    city: 'Santa  Cruz de Tenerife',
+    country: 'Spain',
+    imageUrl: 'https://res.cloudinary.com/intellectfox/image/upload/v1610379364/fe/apartment-sunshine_vhdlel.jpg',
+  },
+  {
+    name: 'Villa Kunerad',
+    city: 'Vysokie Tatry',
+    country: 'Slowakia',
+    imageUrl: 'https://res.cloudinary.com/intellectfox/image/upload/v1610379365/fe/villa-kunerad_gdbqgv.jpg',
+  },
+  {
+    name: 'Hostel Friendship',
+    city: 'Berlin',
+    country: 'Germany',
+    imageUrl: 'https://res.cloudinary.com/intellectfox/image/upload/v1610379364/fe/hostel-friendship_aw6tn7.jpg',
+  },
+  {
+    name: 'Radisson Blu Hotel',
+    city: 'Kyiv',
+    country: 'Ukraine',
+    imageUrl: 'https://res.cloudinary.com/intellectfox/image/upload/v1610379365/fe/radisson-blu-hotel_jwtowg.jpg',
+  },
+  {
+    name: 'Paradise Hotel',
+    city: 'Guadalupe',
+    country: 'Mexico',
+    imageUrl: 'https://res.cloudinary.com/intellectfox/image/upload/v1610379365/fe/paradise-hotel_i6whae.jpg',
+  },
+  {
+    name: 'Hotel Grindewald',
+    city: 'Interlaken',
+    country: 'Switzerland',
+    imageUrl: 'https://res.cloudinary.com/intellectfox/image/upload/v1610379365/fe/hotel-grindewald_zsjsmy.jpg',
+  },
+  {
+    name: 'The Andaman Resort',
+    city: 'Port Dickson',
+    country: 'Malaysia',
+    imageUrl: 'https://res.cloudinary.com/intellectfox/image/upload/v1610379365/fe/the-andaman-resort_d2xksj.jpg',
+  },
+];
+
+const divElement = document.querySelector('#guest-loves');
+const changeDataFunction = data.forEach((element) => {
+  divElement.innerHTML += `
+  <figure class="guests-loves__image-wrapper">
+  <img src=${element.imageUrl} alt="Hotel photo" class="guests-loves__image-photo">
+  <figcaption class="guests-loves__dsc-wrapper">
+    <span class="guests-loves__dsc">${element.name}</span>
+    <span class="guests-loves__dsc-city">${element.city}, ${element.country}</span>
+  </figcaption>
+</figure>`;
+});
+
+/* let elements = Array.from(document.querySelectorAll('.guests-loves__image-wrapper'));
+for (let key in elements) {
+  if (key > 3) {
+      elements[key].style.display = 'none'
+  }
+ console.dir(elements[key])
+} */
