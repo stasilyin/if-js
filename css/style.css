@@ -1,0 +1,123 @@
+@import url("./fonts.css");
+* {
+  font-family: "Roboto", sans-serif;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  color: #ffffff;
+  font-size: 24px;
+}
+.container {
+  width: 90%;
+  margin: 0 auto;
+}
+h2 {
+  font-size: 40px;
+}
+p {
+  display: block;
+  text-align: center;
+  font-weight: 500;
+  height: 32px;
+  line-height: 32px;
+  font-size: 30px;
+  border: 1px solid black;
+  color: black;
+}
+.guest-loves {
+  background-color: #eaf0f9;
+}
+.guests-loves__header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 106px;
+}
+.guests-loves__header h2 {
+  color: #383838;
+}
+.guests-loves__image-wrapper {
+  object-fit: cover;
+  object-position: center;
+}
+
+figure {
+  color: #3077c6;
+  line-height: 28px;
+  margin: 0;
+}
+.guests-loves__dsc-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+.guests-loves__dsc {
+  padding: 24px 0;
+  color: #3077C6;
+}
+.guests-loves__dsc-city {
+  color: #bfbfbf;
+}
+.guest-loves {
+  padding: 120px 0;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  display: none;
+}
+.swiper-button-prev {
+  transform: rotate(0.5turn);
+}
+.swiper-button-next, .swiper-button-prev {
+  top: 35% !important;
+}
+.swiper-button-next{
+  right: 5px !important;
+
+}
+.swiper-button-prev {
+ left: 5px !important;
+}
+.swiper-button-next.swiper-button-disabled,
+.swiper-button-prev.swiper-button-disabled {
+  display: none;
+}
+@media only screen and (max-width: 768px) {
+h2 {  
+font-size: 28px;
+}
+.guests-loves__img-wrap img {
+  width: 155px;
+  height: 155px;
+}
+.guests-loves__dsc-wrapper span {
+  font-size: 12px;
+}
+.guests-loves__dsc {
+  padding-top: 8px;
+  padding-bottom: 4px;
+}
+.swiper-button-next img, .swiper-button-prev img{
+ width: 28px !important;
+ height: 28px !important;
+}
+figure {
+  line-height: 12px;
+}
+.swiper-button-next, .swiper-button-prev {
+  top: 45% !important;
+}
+.swiper-button-next{
+  right: 2px !important;
+
+}
+.swiper-button-prev {
+ left: 2px !important;
+}
+.guest-loves {
+  padding: 40px 0;
+}
+.guests-loves__header {
+  padding-bottom: 32px;
+}
+}

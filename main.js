@@ -641,15 +641,35 @@ const data = [
 const divElement = document.querySelector('#guest-loves');
 const changeDataFunction = data.forEach((element) => {
   divElement.innerHTML += `
-  <figure class="guests-loves__image-wrapper">
-  <img src=${element.imageUrl} alt="Hotel photo" class="guests-loves__image-photo">
+  <figure class="guests-loves__image-wrapper swiper-slide">
+  <div class="guests-loves__img-wrap">
+    <img src=${element.imageUrl} alt="Hotel photo" class="guests-loves__image-photo">
+  </div>
   <figcaption class="guests-loves__dsc-wrapper">
     <span class="guests-loves__dsc">${element.name}</span>
     <span class="guests-loves__dsc-city">${element.city}, ${element.country}</span>
   </figcaption>
 </figure>`;
 });
-
+new Swiper('.swiper-container', {
+  navigation: {
+    nextEl:'.swiper-button-next',
+    prevEl:'.swiper-button-prev'
+  },
+  
+  breakpoints: {
+    320: {
+      slidesPerView: 2,
+      spaceBetween: 16,
+      slidesPerGroup:2,
+    },
+    1200: {
+      slidesPerView: 4,
+      spaceBetween: 16,
+      slidesPerGroup:4,
+    }
+  }
+})
 /* let elements = Array.from(document.querySelectorAll('.guests-loves__image-wrapper'));
 for (let key in elements) {
   if (key > 3) {

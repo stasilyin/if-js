@@ -4,63 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Homework</title>
-    <style type="text/css">
-      p {
-        display: block;
-        text-align: center;
-        font-weight: 500;
-        height: 32px;
-        line-height: 32px;
-        font-size: 40px;
-        border: 1px solid black;
-      }
-      .guest-loves {
-  background-color: #eaf0f9;
-}
-.guests-loves__header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-top: 20px;
-}
-.guests-loves__image {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  position: relative;
-  padding-bottom: 121px;
-  padding-top: 105px;
-}
-.guest-loves-btn-wrap {
-  width: 40px;
-  height: 40px;
-}
-
-figure {
-  color: #3077c6;
-  font-size: 24px;
-  line-height: 28px;
-  margin: 0;
-}
-.guests-loves__dsc-wrapper {
-  display: flex;
-  flex-direction: column;
-}
-.guests-loves__dsc {
-  padding: 24px 0;
-}
-.guests-loves__dsc-city {
-  color: #bfbfbf;
-}
-.next__btn {
-  display: block;
-  width: 40px;
-  height: 40px;
-  position: absolute;
-  right: -1.2%;
-  top: 37%;
-}
-    </style>
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
   </head>
   <body>
     <p id="text1">text</p>
@@ -71,12 +16,15 @@ figure {
         <div class="guests-loves__header">
           <h2>Homes guests loves</h2>
         </div>
-        <div id = "guest-loves" class="guests-loves__image">
-          
+        <div class="swiper-container">
+          <div id = "guest-loves" class="guests-loves__image swiper-wrapper"></div>
+            <div class="swiper-button-prev"><img src="./img/arrow.svg" alt="button prev"></div>
+            <div class="swiper-button-next"><img src="./img/arrow.svg" alt="button next"></div>
         </div>
       </div>
-      </div>
     </section>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script type="text/javascript" src="main.js"></script>
+   
   </body>
 </html>
