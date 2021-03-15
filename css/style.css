@@ -4,8 +4,8 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  color: #ffffff;
-  font-size: 24px;
+  color: #333333;
+  font-size: 12px;
 }
 .container {
   width: 90%;
@@ -31,6 +31,7 @@ h1 {
   line-height: 58px;
   margin: 0;
   padding: 0;
+  color: #ffffff;
 }
 .guest-loves {
   background-color: #eaf0f9;
@@ -130,6 +131,8 @@ header {
 .header-menu a {
   position: relative;
   text-decoration: none;
+  font-size: 24px;
+  color: #ffffff;
 }
 .header-menu__link:after {
   display: block;
@@ -186,7 +189,7 @@ header {
   margin-right: 5px;
 }
 .header-form-input__wrap:nth-child(3) {
-  width: 24%;
+  width: 30%;
 }
 .header-form-input__wrap:nth-child(4) {
   width: 17%;
@@ -216,6 +219,7 @@ header {
   height: 64px;
   margin-top: 145px;
 }
+
 .header-form-input__wrap input:focus {
   border: 3px solid #f5bd41;
   outline: 0px;
@@ -258,6 +262,10 @@ input:hover {
 .header-form-mobie_row {
   display: none;
 }
+.header-people__select-yers-children {
+  margin-top: 12px;
+}
+
 @media only screen and (max-width: 768px) {
   h2 {
     font-size: 28px;
@@ -504,7 +512,8 @@ input:hover {
     position: relative;
     width: 100%;
   }
-
+  
+  
   /*input date mobile*/
   .header-form-mobie__date {
     display: flex;
@@ -569,4 +578,69 @@ input:hover {
     padding-top: 32px;
     padding-bottom: 40px;
   }
+}
+
+.header-people-add {
+  width: 259px;
+  padding: 22px;
+  border: 1px #3077C6 solid;
+  border-radius: 8px;
+  background-color: #fff;
+  position: absolute;
+  left: 62%;
+  top: 12px;
+}
+.header-people__info-children span {
+  display: block;
+  color: #333333;
+  font-size: 12px;
+}
+.header-people__row span,
+.header-people__row__button a {
+  color: #333333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+}
+.header-people__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.header-people__row__button {
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header-people-buttons {
+  width: 30px;
+  height: 30px;
+  border: 1px #3077C6 solid;
+}
+.header-people__row__button-value {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+select {
+  color: #333333;
+  font-size: 12px;
+  border: 1px #3077C6 solid;
+  height: 30px;
+  width: 42%;
+  margin-right: 10px;
+}
+.header-people-wrapper {
+  background-color: #fff;
+  position: relative;
+  display: none;
+}
+.header-people__row a {
+  cursor: pointer;
+}
+.header-people__row span {
+  cursor: default;
 }

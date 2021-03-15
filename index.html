@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Homework</title>
     <link rel="stylesheet" href="./css/style.css" />
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+   <!--  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"> -->
   </head>
   <body>
     <header>
@@ -41,16 +41,19 @@
                 to live, work or just relax
               </h1>
             </div>
-            <form class="header-form row">
+            <form class="header-form row" id ="header-form">
               <div class="header-form-input-row">
                 <div class="header-form-input__wrap"><input type="text" id="city" required /><label for="city"
                     class="city">Your destination or hotel name</label></div>
                 <div class="header-form-input__wrap"><input type="text" id="date" required onblur="(this.type='text')"
                     onfocus="(this.type='date')" /><label for="date" class="date">Check-in — Check-out</label></div>
-                <div class="header-form-input__wrap"><input type="text" id="people" required /><label for="people"
-                    class="people">2 Adults - 0 Children - 1 Room</label></div>
+                <div class="header-form-input__wrap" id = "header-form-input__wrap-people"><input type="text" id="people" required /><label for="people"
+                    class="people" id = "label_people">Adults - Children - Room</label></div>
                 <div class="header-form-input__wrap"><input type="submit" value="Search" /></div>
               </div>
+          </div>
+          <div class="header-people-wrapper" id = "header-form-one">
+            
           </div>
           <div class="header-form-mobie_row">
             <div class="header-form-mobie__search">
@@ -94,7 +97,7 @@
       </div>
       </div>
     </header>
-    <section class="guest-loves">
+    <!-- <section class="guest-loves">
       <div class="container">
         <div class="guests-loves__header">
           <h2>Homes guests loves</h2>
@@ -105,8 +108,8 @@
             <div class="swiper-button-next"><img src="./img/arrow.svg" alt="button next"></div>
         </div>
       </div>
-    </section>
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <script type="text/javascript" src="main.js"></script>
+    </section> -->
+   <!--  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script> -->
+    <script src="main.js"></script>
   </body>
 </html>
