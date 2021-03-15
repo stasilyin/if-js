@@ -1,4 +1,4 @@
-/* const data = [
+const data = [
   {
     name: 'Hotel Leopold',
     city: 'Saint Petersburg',
@@ -62,30 +62,26 @@ const changeDataFunction = data.forEach((element) => {
   </figcaption>
 </figure>`;
 });
-
 new Swiper('.guest-loves__swiper-container', {
-  slideClass:'guests-loves__swiper-slide',
-  wrapperClass:'guest-loves__swiper-wrapper',
-  navigation: {
-    nextEl:'.swiper-button-next',
-    prevEl:'.swiper-button-prev'
-  },
-  
-  breakpoints: {
-    320: {
-      slidesPerView: 2,
-      spaceBetween: 16,
-      slidesPerGroup:2,
+    slideClass:'guests-loves__swiper-slide',
+    wrapperClass:'guest-loves__swiper-wrapper',
+    navigation: {
+      nextEl:'.swiper-button-next',
+      prevEl:'.swiper-button-prev'
     },
-    1200: {
-      slidesPerView: 4,
-      spaceBetween: 16,
-      slidesPerGroup:4,
+    breakpoints: {
+      320: {
+        slidesPerView: 2,
+        spaceBetween: 16,
+        slidesPerGroup:2,
+      },
+      1200: {
+        slidesPerView: 4,
+        spaceBetween: 16,
+        slidesPerGroup:4,
+      }
     }
-  }
-});
- */
-
+  });
 const formTextPeople = document.querySelector('.header-people-wrapper')
 formTextPeople.innerHTML = `<div class="header-people-add">
 <div class="header-people__row">
