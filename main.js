@@ -63,24 +63,24 @@ const changeDataFunction = data.forEach((element) => {
 </figure>`;
 });
 new Swiper('.guest-loves__swiper-container', {
-    slideClass:'guests-loves__swiper-slide',
-    wrapperClass:'guest-loves__swiper-wrapper',
-    navigation: {
-      nextEl:'.swiper-button-next',
-      prevEl:'.swiper-button-prev'
+  slideClass: 'guests-loves__swiper-slide',
+  wrapperClass: 'guest-loves__swiper-wrapper',
+  navigation: {
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev',
+  },
+  breakpoints: {
+    320: {
+      slidesPerView: 2,
+      spaceBetween: 16,
+      slidesPerGroup:2,
     },
-    breakpoints: {
-      320: {
-        slidesPerView: 2,
-        spaceBetween: 16,
-        slidesPerGroup:2,
-      },
-      1200: {
-        slidesPerView: 4,
-        spaceBetween: 16,
-        slidesPerGroup:4,
-      }
-    }
+    1200: {
+      slidesPerView: 4,
+      spaceBetween: 16,
+      slidesPerGroup:4,
+    },
+    },
   });
 const formTextPeople = document.querySelector('.header-people-wrapper')
 formTextPeople.innerHTML = `<div class="header-people-add">
@@ -99,22 +99,21 @@ const inputPeople = document.querySelector('#people');
 inputPeople.onfocus = function () {
   inputPeople.value = ' ';
   const labelPeopel = document.querySelector('#header-form');
-  formTextPeople.style.display = 'block'
+  formTextPeople.style.display = 'block';
   labelPeopel.appendChild(formTextPeople);
   changeColor();
-}
+};
 inputPeople.onblur = function () {
   if (inputPeople.value) {
-    formTextPeople.style.display = 'block'
-} else {
-  formTextPeople.style.display = 'none'
-}
-} 
-
-const generateSelect = event => {
+    formTextPeople.style.display = 'block';
+  } else {
+    formTextPeople.style.display = 'none';
+  }
+};
+const generateSelect = (event) => {
   const selectionChildren = document.createElement('div');
   selectionChildren.classList.add('header-people__info-children');
-  selectionChildren.innerHTML = `<span>What is the age of the child you’re travelling with?</span>`; 
+  selectionChildren.innerHTML = `<span>What is the age of the child you’re travelling with?</span>`;
   const selectionItems = document.createElement('select');
   selectionItems.classList.add('header-people__select-yers-children');
   selectionItems.innerHTML = `<option value = '1'>1 yers old</option>
@@ -135,9 +134,9 @@ const generateSelect = event => {
   <option value = '16'>16 yers old</option>
   <option value = '17'>17 yers old</option>
   </select>`;
-    let generateWhile = 0;
-    event.target.id == "dellChildren" ? 
-      generateWhile = event.target.nextSibling.innerHTML : generateWhile = event.target.previousSibling.innerHTML;
+  let generateWhile = 0;
+  event.target.id == 'dellChildren' ?
+  generateWhile = event.target.nextSibling.innerHTML : generateWhile = event.target.previousSibling.innerHTML;
   if (document.querySelector('.header-people__info-children')) {
     document.querySelector('.header-people__info-children').remove();
   }
@@ -145,7 +144,7 @@ const generateSelect = event => {
     if (i == 0) {
       document.querySelector('.header-people-add').appendChild(selectionChildren);
       selectionChildren.appendChild(selectionItems);
-    } else { 
+    } else {
       const selectionItems = document.createElement('select');
       selectionItems.classList.add('header-people__select-yers-children');
       selectionItems.innerHTML = `<option value = '1'>1 yers old</option>
@@ -169,82 +168,77 @@ const generateSelect = event => {
       selectionChildren.appendChild(selectionItems);
     }
   }
-}
+};
 
 const changeColor = () => document.querySelectorAll('.header-people__row__button-value').forEach(element => {
   if (element.innerHTML == 0) {
-    element.previousSibling.style.borderColor = "#CECECE";
-    element.previousSibling.style.color = "#CECECE";
+    element.previousSibling.style.borderColor = '#CECECE';
+    element.previousSibling.style.color = '#CECECE';
   } else {
-    element.previousSibling.style.borderColor = "#3077C6";
-    element.previousSibling.style.color = "#3077C6";
+    element.previousSibling.style.borderColor = '#3077C6';
+    element.previousSibling.style.color = '#3077C6';
   }
-  if (element.innerHTML == 30 || (element.innerHTML == 10 && element.id == "value-children")) {
-    element.nextSibling.style.borderColor = "#CECECE";
-    element.nextSibling.style.color = "#CECECE";
+  if (element.innerHTML == 30 || (element.innerHTML == 10 && element.id == 'value-children')) {
+    element.nextSibling.style.borderColor = '#CECECE';
+    element.nextSibling.style.color = '#CECECE';
   } else {
-    element.nextSibling.style.borderColor = "#3077C6";
-    element.nextSibling.style.color = "#3077C6";
+    element.nextSibling.style.borderColor = '#3077C6';
+    element.nextSibling.style.color = '#3077C6';
   }
 });
 const generateValueInputPeople = () => {
   const allValue = document.querySelectorAll('.header-people__row__button-value');
   const result = [];
-  allValue.forEach(element => {
+  allValue.forEach((element) => {
     result.push(element.innerHTML);
   });
   const inputPeopleInfo = document.querySelector('#people');
   let finalValue = '';
-  for (let key in result) {
+  for (const key in result) {
     switch (key) {
-      case '0': finalValue += result[key] + " Adults - "; break;
-      case '1': finalValue += result[key] + " Children - "; break;
-      case '2': finalValue += result[key] + " Rooms"; break;
+      case '0': finalValue += result[key] + ' Adults - '; break;
+      case '1': finalValue += result[key] + ' Children - '; break;
+      case '2': finalValue += result[key] + ' Rooms'; break;
     }
   }
   inputPeopleInfo.value = finalValue;
-}
-const addChildren = event => {
+};
+const addChildren = (event) => {
   event.stopPropagation();
   event.preventDefault();
   let value = event.target.previousSibling.innerHTML;
-    if ((event.target.id == "addAdults" || event.target.id == "addRooms") && (value < 30 && value >= 0)) {
-      event.target.previousSibling.innerHTML = ++value;
-    }
-    if (event.target.id == "addChildren" && value == 0) {
-      event.target.previousSibling.innerHTML = ++value;
-      generateSelect(event)
-    } else if (event.target.id == "addChildren" && (value >= 1 && value < 10)) {
-      event.target.previousSibling.innerHTML = ++value;
-      generateSelect(event);
-     
-  }  
+  if ((event.target.id == 'addAdults' || event.target.id == 'addRooms') && (value < 30 && value >= 0)) {
+    event.target.previousSibling.innerHTML = ++value;
+  }
+  if (event.target.id == 'addChildren' && value == 0) {
+    event.target.previousSibling.innerHTML = ++value;
+    generateSelect(event);
+  } else if (event.target.id == 'addChildren' && (value >= 1 && value < 10)) {
+    event.target.previousSibling.innerHTML = ++value;
+    generateSelect(event);
+  }
   changeColor();
   generateValueInputPeople();
-} 
-const dellChildren = event => {
+};
+const dellChildren = (event) => {
   event.stopPropagation();
   event.preventDefault();
   let value = event.target.nextSibling.innerHTML;
-    if ((event.target.id == "dellAdults" || event.target.id == "dellRooms") && (value > 0)) {
-      event.target.nextSibling.innerHTML = --value;
-    }
-    if (event.target.id == "dellChildren" && value >= 1) {
-      event.target.nextSibling.innerHTML = --value;
-      generateSelect(event);
-    }
-    changeColor();
-    generateValueInputPeople();
-}
+  if ((event.target.id == 'dellAdults' || event.target.id == 'dellRooms') && (value > 0)) {
+    event.target.nextSibling.innerHTML = --value;
+  }
+  if (event.target.id == 'dellChildren' && value >= 1) {
+    event.target.nextSibling.innerHTML = --value;
+    generateSelect(event);
+  }
+  changeColor();
+  generateValueInputPeople();
+};
 const btnAddAll = document.querySelectorAll('.header-people-buttons__plus');
 const btnDelAll = document.querySelectorAll('.header-people-buttons__minus');
-btnAddAll.forEach(element => {
+btnAddAll.forEach((element) => {
   element.addEventListener('click', addChildren, true);
 });
-btnDelAll.forEach(element => {
+btnDelAll.forEach((element) => {
   element.addEventListener('click', dellChildren, true);
 });
-
-
-
-
