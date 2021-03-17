@@ -10,6 +10,7 @@
 .container {
   width: 90%;
   margin: 0 auto;
+  max-width: 1232px;
 }
 ul,
 h2 {
@@ -35,6 +36,7 @@ h1 {
 }
 .guest-loves {
   background-color: #eaf0f9;
+  position: relative;
 }
 .guests-loves__header {
   display: flex;
@@ -76,7 +78,9 @@ figure {
 .guest-loves {
   padding: 120px 0;
 }
-
+.guest-loves__slider-wrapper {
+  position: relative;
+}
 .swiper-button-next::after,
 .swiper-button-prev::after {
   display: none;
@@ -86,13 +90,13 @@ figure {
 }
 .swiper-button-next,
 .swiper-button-prev {
-  top: 35% !important;
+  top: 40% !important;
 }
 .swiper-button-next {
-  right: 5px !important;
+  right: -15px !important;
 }
 .swiper-button-prev {
-  left: 5px !important;
+  left: -15px !important;
 }
 .swiper-button-next.swiper-button-disabled,
 .swiper-button-prev.swiper-button-disabled {
@@ -651,4 +655,10 @@ select {
 }
 .header-people__row span {
   cursor: default;
+}
+input[type=date]:required:invalid::-webkit-datetime-edit {
+  color: transparent;
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
 }
