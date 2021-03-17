@@ -59,6 +59,10 @@ figure {
   display: flex;
   flex-direction: column;
 }
+.guests-loves__image-photo {
+  width: 295px;
+  height: 295px;
+}
 .guests-loves__dsc-wrapper span {
   font-size: 24px;
 }
