@@ -266,7 +266,7 @@ input:hover {
 .header-heading__logo-small {
   display: none;
 }
-.header-form-mobie_row {
+.header-form-mobile_row {
   display: none;
 }
 .header-people__select-yers-children {
@@ -360,7 +360,7 @@ input:hover {
     font-size: 30px;
     line-height: 35px;
   }
-  .header-form-mobie_row {
+  .header-form-mobile_row {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -374,7 +374,7 @@ input:hover {
     justify-content: center;
     align-items: center;
   }
-  .header-form-mobie__search {
+  .header-form-mobile__search {
     margin-bottom: 8px;
     position: relative;
   }
@@ -472,7 +472,7 @@ input:hover {
     outline-color: #f5bd41;
   }
   /*input search*/
-  .header-form-mobie__search {
+  .header-form-mobile__search {
     width: 100%;
   }
   .input_search {
@@ -513,24 +513,24 @@ input:hover {
     left: 9%;
     top: 30%;
   }
-  .header-form-mobie__search,
-  .header-form-mobie__date-in,
-  .header-form-mobie__date-out {
+  .header-form-mobile__search,
+  .header-form-mobile__date-in,
+  .header-form-mobile__date-out {
     position: relative;
     width: 100%;
   }
   
   
   /*input date mobile*/
-  .header-form-mobie__date {
+  .header-form-mobile__date {
     display: flex;
     width: 100%;
   }
-  .header-form-mobie__date-in {
+  .header-form-mobile__date-in {
     margin-right: 8px;
   }
   /*input people*/
-  .header-form-mobie__piople {
+  .header-form-mobile__piople {
     display: flex;
     margin-top: 8px;
     background-color: #ffffff;
@@ -539,13 +539,13 @@ input:hover {
     align-items: center;
     width: 100%;
   }
-  .header-form-mobie__adults,
-  .header-form-mobie__children,
-  .header-form-mobie__date-rooms {
+  .header-form-mobile__adults,
+  .header-form-mobile__children,
+  .header-form-mobile__date-rooms {
     position: relative;
   }
 
-  .header-form-mobie__children {
+  .header-form-mobile__children {
     margin: 0 8px;
   }
   .input-mobile__adults,
@@ -560,11 +560,11 @@ input:hover {
     width: 1px;
     background: #bfbfbf;
   }
-  .header-form-mobie__search-btn {
+  .header-form-mobile__search-btn {
     margin-top: 8px;
     width: 100%;
   }
-  .header-form-mobie__search-btn input {
+  .header-form-mobile__search-btn input {
     padding: 0;
     width: 100%;
     height: 48px;
@@ -573,7 +573,7 @@ input:hover {
     background-color: #f3f3f4;
     transition: 0.5s;
   }
-  .header-form-mobie__search-btn input:hover {
+  .header-form-mobile__search-btn input:hover {
     color: #ffffff;
     background-color: #3077c6;
     transition: 0.5s;
@@ -639,6 +639,7 @@ select {
   height: 30px;
   width: 42%;
   margin-right: 10px;
+  margin-top: 12px;
 }
 .header-people-wrapper {
   background-color: #fff;
