@@ -12,10 +12,7 @@ async function getDateWithRequest (url) {
       })
     })
 }
-<<<<<<< HEAD
-=======
 
->>>>>>> lesson-10
 const dataForGuestLoves = renderExam(requestUrl);
 async function renderExam(url) {
 const dataForGuestLoves = await getDateWithRequest(url);
@@ -65,56 +62,6 @@ formTextPeople.innerHTML = `<div class="header-people-add">
     <span>Rooms</span><div class = "header-people__row__button"><a class="header-people-buttons header-people-buttons__minus" id = "dellRooms">-</a><span class="header-people__row__button-value">0</span><a class="header-people-buttons header-people-buttons__plus" id = "addRooms">+</a></div>
   </div>
   </div>`;
-<<<<<<< HEAD
-
-const inputPeople = document.querySelector('#people');
-inputPeople.onfocus = function () {
-  inputPeople.value = ' ';
-  const labelPeople = document.querySelector('#header-form');
-  formTextPeople.style.display = 'block';
-  labelPeople.appendChild(formTextPeople);
-  changeColor();
-};
-inputPeople.onblur = function () {
-  if (inputPeople.value) {
-    formTextPeople.style.display = 'block';
-  } else {
-    formTextPeople.style.display = 'none';
-  }
-};
-
-const generateSelect = (event) => {
-  const selectionItemsText = `<option value = '1'>1 years old</option>
-      <option value = '2'>2 years old</option>
-      <option value = '3'>3 years old</option>
-      <option value = '4'>4 years old</option>
-      <option value = '5'>5 years old</option>
-      <option value = '6'>6 years old</option>
-      <option value = '7'>7 years old</option>
-      <option value = '8'>8 years old</option>
-      <option value = '9'>9 years old</option>
-      <option value = '10'>10 years old</option>
-      <option value = '11'>11 years old</option>
-      <option value = '12'>12 years old</option>
-      <option value = '13'>13 years old</option>
-      <option value = '14'>14 years old</option>
-      <option value = '15'>15 years old</option>
-      <option value = '16'>16 years old</option>
-      <option value = '17'>17 years old</option>
-      </select>`;
-  const selectionChildren = document.createElement('div');
-  selectionChildren.classList.add('header-people__info-children');
-  selectionChildren.innerHTML = `<span>What is the age of the child you’re travelling with?</span>`;
-  const selectionItems = document.createElement('select');
-  selectionItems.classList.add('header-people__select-years-children');
-  selectionItems.innerHTML = selectionItemsText;
-  let generateWhile = 0;
-  event.target.id === 'dellChildren' ?
-  generateWhile = event.target.nextSibling.innerHTML : generateWhile = event.target.previousSibling.innerHTML;
-  if (document.querySelector('.header-people__info-children')) {
-    document.querySelector('.header-people__info-children').remove();
-  }
-=======
 const inputPeople = document.querySelector('#header-form-input__wrap-people');
 const blockPeopleAdd = document.querySelector('.header-people-add')
 
@@ -159,7 +106,6 @@ const generateSelect = (event) => {
   if (document.querySelector('.header-people__info-children')) {
     document.querySelector('.header-people__info-children').remove();
   }
->>>>>>> lesson-10
   for (let i = 0; i < generateWhile; i++) {
     if (i === 0) {
       document.querySelector('.header-people-add').appendChild(selectionChildren);
@@ -219,7 +165,6 @@ const addChildren = (event) => {
   console.log(value)
   if ((event.target.id === idAddAdultsBtn || event.target.id === idAddRoomsBtn) && (value < 30 && value >= 0)) {
     event.target.previousSibling.innerHTML = ++value;
-<<<<<<< HEAD
   }
   if (event.target.id === idAddChildrenBtn && value === 0) {
     event.target.previousSibling.innerHTML = ++value;
@@ -228,16 +173,6 @@ const addChildren = (event) => {
     event.target.previousSibling.innerHTML = ++value;
     generateSelect(event);
   }
-=======
-  }
-  if (event.target.id === idAddChildrenBtn && value === 0) {
-    event.target.previousSibling.innerHTML = ++value;
-    generateSelect(event);
-  } else if (event.target.id === idAddChildrenBtn && (value >= 1 && value < 10)) {
-    event.target.previousSibling.innerHTML = ++value;
-    generateSelect(event);
-  }
->>>>>>> lesson-10
   changeColor();
   generateValueInputPeople();
 };
