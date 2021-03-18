@@ -52,18 +52,36 @@ h1 {
   object-position: center;
 }
 
+<<<<<<< HEAD
 figure {
   color: #3077c6;
   line-height: 28px;
   margin: 0;
+=======
+.guests-loves figure {
+  color: #3077c6;
+  line-height: 28px;
+  margin: 0;
+  overflow: hidden;
+  width: 25%;
+>>>>>>> lesson-10
 }
 .guests-loves__dsc-wrapper {
   display: flex;
   flex-direction: column;
 }
+<<<<<<< HEAD
 .guests-loves__image-photo {
   width: 295px;
   height: 295px;
+=======
+
+.guests-loves__image-photo {
+  height: 24em;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+>>>>>>> lesson-10
 }
 .guests-loves__dsc-wrapper span {
   font-size: 24px;
@@ -90,7 +108,11 @@ figure {
 }
 .swiper-button-next,
 .swiper-button-prev {
+<<<<<<< HEAD
   top: 40% !important;
+=======
+  top: 37% !important;
+>>>>>>> lesson-10
 }
 .swiper-button-next {
   right: -15px !important;
@@ -115,6 +137,10 @@ figure {
 .guests-loves__swiper-slide {
   flex-shrink: 0;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> lesson-10
 /*header*/
 header {
   background: url(../img/headerphoto.png) no-repeat center / cover;
@@ -183,7 +209,11 @@ header {
 }
 
 .header-form-input__wrap input {
+<<<<<<< HEAD
   width: 97%;
+=======
+  width: 100%;
+>>>>>>> lesson-10
   height: 64px;
   border-radius: 8px;
   padding: 0;
@@ -193,10 +223,17 @@ header {
   font-weight: 400;
 }
 .header-form-input__wrap:first-child {
+<<<<<<< HEAD
   width: 37%;
 }
 .header-form-input__wrap:nth-child(2) {
   width: 17%;
+=======
+  width: 35%;
+}
+.header-form-input__wrap:nth-child(2) {
+  width: 19%;
+>>>>>>> lesson-10
   margin-right: 5px;
 }
 .header-form-input__wrap:nth-child(3) {
@@ -278,6 +315,12 @@ input:hover {
 }
 
 @media only screen and (max-width: 768px) {
+<<<<<<< HEAD
+=======
+  .container {
+    min-width: 368px;
+  }
+>>>>>>> lesson-10
   h2 {
     font-size: 28px;
   }
@@ -297,9 +340,12 @@ input:hover {
     width: 28px !important;
     height: 28px !important;
   }
+<<<<<<< HEAD
   figure {
     line-height: 12px;
   }
+=======
+>>>>>>> lesson-10
   .swiper-button-next,
   .swiper-button-prev {
     top: 45% !important;
@@ -598,6 +644,10 @@ input:hover {
   border-radius: 8px;
   background-color: #fff;
   position: absolute;
+<<<<<<< HEAD
+=======
+  z-index: 1;
+>>>>>>> lesson-10
   left: 62%;
   top: 12px;
 }
@@ -658,7 +708,10 @@ select {
 }
 input[type=date]:required:invalid::-webkit-datetime-edit {
   color: transparent;
+<<<<<<< HEAD
 }
 input[type="date"]::-webkit-calendar-picker-indicator {
   display: none;
+=======
+>>>>>>> lesson-10
 }
