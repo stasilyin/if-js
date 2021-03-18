@@ -12,6 +12,7 @@ async function getDateWithRequest (url) {
       })
     })
 }
+
 const dataForGuestLoves = renderExam(requestUrl);
 async function renderExam(url) {
 const dataForGuestLoves = await getDateWithRequest(url);
@@ -61,22 +62,18 @@ formTextPeople.innerHTML = `<div class="header-people-add">
     <span>Rooms</span><div class = "header-people__row__button"><a class="header-people-buttons header-people-buttons__minus" id = "dellRooms">-</a><span class="header-people__row__button-value">0</span><a class="header-people-buttons header-people-buttons__plus" id = "addRooms">+</a></div>
   </div>
   </div>`;
+const inputPeople = document.querySelector('#header-form-input__wrap-people');
+const blockPeopleAdd = document.querySelector('.header-people-add')
 
-const inputPeople = document.querySelector('#people');
-inputPeople.onfocus = function () {
-  inputPeople.value = ' ';
-  const labelPeople = document.querySelector('#header-form');
-  formTextPeople.style.display = 'block';
-  labelPeople.appendChild(formTextPeople);
+inputPeople.addEventListener('click', (e) => {
+  e.stopPropagation();
+  formTextPeople.style.display = "block";
   changeColor();
-};
-inputPeople.onblur = function () {
-  if (inputPeople.value) {
-    formTextPeople.style.display = 'block';
-  } else {
-    formTextPeople.style.display = 'none';
-  }
-};
+}, true);
+document.addEventListener('click', () => {
+  formTextPeople.style.display = "none";
+}, false);
+
 
 const generateSelect = (event) => {
   const selectionItemsText = `<option value = '1'>1 years old</option>

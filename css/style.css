@@ -52,18 +52,23 @@ h1 {
   object-position: center;
 }
 
-figure {
+.guests-loves figure {
   color: #3077c6;
   line-height: 28px;
   margin: 0;
+  overflow: hidden;
+  width: 25%;
 }
 .guests-loves__dsc-wrapper {
   display: flex;
   flex-direction: column;
 }
+
 .guests-loves__image-photo {
-  width: 295px;
-  height: 295px;
+  height: 24em;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 .guests-loves__dsc-wrapper span {
   font-size: 24px;
@@ -115,6 +120,7 @@ figure {
 .guests-loves__swiper-slide {
   flex-shrink: 0;
 }
+
 /*header*/
 header {
   background: url(../img/headerphoto.png) no-repeat center / cover;
@@ -183,7 +189,7 @@ header {
 }
 
 .header-form-input__wrap input {
-  width: 97%;
+  width: 100%;
   height: 64px;
   border-radius: 8px;
   padding: 0;
@@ -193,10 +199,10 @@ header {
   font-weight: 400;
 }
 .header-form-input__wrap:first-child {
-  width: 37%;
+  width: 35%;
 }
 .header-form-input__wrap:nth-child(2) {
-  width: 17%;
+  width: 19%;
   margin-right: 5px;
 }
 .header-form-input__wrap:nth-child(3) {
@@ -278,6 +284,9 @@ input:hover {
 }
 
 @media only screen and (max-width: 768px) {
+  .container {
+    min-width: 368px;
+  }
   h2 {
     font-size: 28px;
   }
@@ -296,9 +305,6 @@ input:hover {
   .swiper-button-prev img {
     width: 28px !important;
     height: 28px !important;
-  }
-  figure {
-    line-height: 12px;
   }
   .swiper-button-next,
   .swiper-button-prev {
@@ -598,6 +604,7 @@ input:hover {
   border-radius: 8px;
   background-color: #fff;
   position: absolute;
+  z-index: 1;
   left: 62%;
   top: 12px;
 }
@@ -658,7 +665,4 @@ select {
 }
 input[type=date]:required:invalid::-webkit-datetime-edit {
   color: transparent;
-}
-input[type="date"]::-webkit-calendar-picker-indicator {
-  display: none;
 }
