@@ -1,32 +1,38 @@
 const requestUrl = 'https://fe-student-api.herokuapp.com/api/hotels/popular';
 const divElement = document.querySelector('#guest-loves');
-async function getDateWithRequest (url) {
+function getDateWithRequest (url) {
   return fetch(url).then(response => {
-      if (response.ok) {
-        return response.json();
-      }
-      return response.json().then( error => {
-        const err = new Error('Oops..., something went wrong');
-        err.data = error;
-        throw err;
-      })
+    if (response.ok) {
+      return response.json();
+    }
+    return response.json().then( error => {
+      const err = new Error('Oops..., something went wrong');
+      err.data = error;
+      throw err;
     })
+  });
 }
 
-const dataForGuestLoves = renderExam(requestUrl);
-async function renderExam(url) {
-const dataForGuestLoves = await getDateWithRequest(url);
-dataForGuestLoves.forEach((element) => {
-  divElement.innerHTML += `
-    <figure class="guests-loves__image-wrapper guests-loves__swiper-slide">
-      <div class="guests-loves__img-wrap">
-        <img src=${element.imageUrl} alt="Hotel photo" class="guests-loves__image-photo">
-      </div>
-      <figcaption class="guests-loves__dsc-wrapper">
-        <span class="guests-loves__dsc">${element.name}</span>
-        <span class="guests-loves__dsc-city">${element.city}, ${element.country}</span>
-      </figcaption>
-    </figure>`;
+renderRequestForGuestLoves(requestUrl);
+async function renderRequestForGuestLoves(requestUrl) {
+  let dataForGuestLoves = '';
+  if (sessionStorage.getItem('dataForGuestLoves')) {
+    dataForGuestLoves = JSON.parse(sessionStorage.getItem('dataForGuestLoves'));
+  } else {
+    dataForGuestLoves = await getDateWithRequest(requestUrl);
+    sessionStorage.setItem('dataForGuestLoves', JSON.stringify(dataForGuestLoves))
+  }
+  dataForGuestLoves.forEach((element) => {
+    divElement.innerHTML += `
+      <figure class="guests-loves__image-wrapper guests-loves__swiper-slide">
+        <div class="guests-loves__img-wrap">
+          <img src=${element.imageUrl} alt="Hotel photo" class="guests-loves__image-photo">
+        </div>
+        <figcaption class="guests-loves__dsc-wrapper">
+          <span class="guests-loves__dsc">${element.name}</span>
+          <span class="guests-loves__dsc-city">${element.city}, ${element.country}</span>
+        </figcaption>
+      </figure>`;
   });
   new Swiper('.guest-loves__swiper-container', {
     slideClass: 'guests-loves__swiper-slide',
