@@ -76,12 +76,19 @@ inputPeople.addEventListener('click', (e) => {
   formTextPeople.style.display = "block";
   changeColor();
 }, true);
-document.addEventListener('click', () => {
+document.addEventListener('click', (e) => {
+  e.stopPropagation();
   formTextPeople.style.display = "none";
+  const calendar = document.querySelector('#calendar');
+  /* const calendarMonth = document.querySelector('.calend-wrapper'); */
+  calendar.firstChild.remove();
+  calendar.lastChild.remove();
+  calendar.style.display = 'none';
 }, false);
 
 
 const generateSelect = (event) => {
+  event.stopPropagation();
   const selectionItemsText = `<option value = '1'>1 years old</option>
       <option value = '2'>2 years old</option>
       <option value = '3'>3 years old</option>
@@ -208,3 +215,178 @@ btnAddAll.forEach((element) => {
 btnDelAll.forEach((element) => {
   element.addEventListener('click', dellChildren, true);
 });
+
+Date.prototype.daysInMonth = function(year, month) {
+  month -= 1;
+  return 32 - new Date(year, month, 32).getDate();
+}
+Date.prototype.dayOfWeek = function(year, month) {
+    month -= 1;
+    let firstDay = (new Date(year, month, 1));
+    let firstDayWeek = firstDay.getDay();
+    let t = firstDayWeek - 1;
+    if ( t < 0 ) {
+        t = 6;
+    }
+    return t + 1;
+  }
+   class Calendar {
+       constructor(dataMonth) {
+            this.dataMonth = dataMonth;
+       }
+       getCurrMonth() {
+        try {
+          let { daysInMonth, daysInWeek, dayOfWeek, checkInDay, checkOutDay } = this.dataMonth;
+          if (dayOfWeek > daysInWeek) throw new Error('День начала недели больше количества дней в неделе');
+          const result = [];
+          let countDays = 1;
+          for (let i = 0; i < Math.ceil(daysInMonth / daysInWeek); i++) {
+            result[i] = [];
+          }
+          if (dayOfWeek !== 1) {
+            countDays = daysInMonth - (dayOfWeek - 2);
+          }
+          for (let i = 0; i < result.length; i++) {
+            for (let j = 0; j < daysInWeek; j++) {
+              if (countDays > daysInMonth) {
+                countDays = 1;
+              }
+              const day = { dayOfMonth: countDays, notCurrentMonth: false, selectedDay: false };
+              result[i].push(day);
+              if (result[0][j].dayOfMonth > 7) {
+                result[0][j].notCurrentMonth = true;
+              }
+              if (result[i][j].dayOfMonth >= checkInDay && result[i][j].dayOfMonth
+                <= checkOutDay && result[i][j].notCurrentMonth === false) {
+                result[i][j].selectedDay = true;
+              }
+              ++countDays;
+            }
+          }
+          const isLastDayLastWeek = () => {
+            for (let i = result.length - 1; i < result.length; i++) {
+              for (let j = 0; j < daysInWeek; j++) {
+                if (result[i][j].dayOfMonth === daysInMonth) {
+                  return true;
+                }
+              }
+            }
+            return false;
+          };
+          if (!isLastDayLastWeek()) {
+            result.push([]);
+            for (let i = result.length - 1; i < result.length; i++) {
+              countDays = result[result.length - 2][daysInWeek - 1].dayOfMonth + 1;
+              for (let j = 0; j < daysInWeek; j++) {
+                if (countDays > daysInMonth) {
+                  countDays = 1;
+                }
+                const day = { dayOfMonth: countDays, notCurrentMonth: false, selectedDay: false };
+                result[i].push(day);
+                countDays++;
+              }
+            }
+          }
+          for (let i = 0; i < result.length; i++) {
+            for (let j = 0; j < daysInWeek; j++) {
+              if (result[result.length - 1][j].dayOfMonth >= 1
+                  && result[result.length - 1][j].dayOfMonth <= 7) {
+                result[result.length - 1][j].notCurrentMonth = true;
+              }
+              if (result[i][j].dayOfMonth >= checkInDay
+                  && result[i][j].dayOfMonth <= checkOutDay
+                  && result[i][j].notCurrentMonth === false) result[i][j].selectedDay = true;
+              if (new Date().getDate() === result[i][j].dayOfMonth
+                  && result[i][j].notCurrentMonth === false) {
+                result[i][j].currentDay = true;
+              } else {
+                result[i][j].currentDay = false;
+              }
+            }
+          }
+          return result;
+          
+        } catch (e) {
+          return e;
+        } 
+   }
+}
+
+class CalendarPrint {
+  constructor (month, year) {
+    this.month = month;
+    this.year = year;
+  }
+  printMonth () {
+    const getObjectMonth = {
+      daysInMonth: new Date().daysInMonth(this.year,this.month),
+      daysInWeek: 7,
+      dayOfWeek: new Date().dayOfWeek(this.year, this.month),
+    }
+    const currentMonth = new Calendar(getObjectMonth).getCurrMonth();
+    const tableTbody = document.createElement('div');
+    tableTbody.classList.add('calend-wrapper');
+    const tableCaption = document.createElement('div');
+    tableCaption.style.fontWeight = '500';
+    tableCaption.style.fontSize = '18px';
+    tableCaption.classList.add('headerCalen');
+    const monthes = ['January', 'February', 'March', 'April', 'May', 'June ', 'July ', 'August ', 'September ', 'October', 'November', 'December'];
+    const daysWeek = ['Mo','Tu','We','Th','Fr','Sa','Su'];
+    tableCaption.innerHTML = monthes[new Date(this.year,this.month).getMonth() - 1] + ' ' + this.year;
+    tableTbody.appendChild(tableCaption);
+    
+    let i = 0;
+    while(i < daysWeek.length) {
+      const rowsTableWeek = document.createElement('div');
+      rowsTableWeek.innerHTML = daysWeek[i];
+      rowsTableWeek.style.fontSize = '14px';
+      tableTbody.appendChild(rowsTableWeek);
+      i++;
+    }
+                                             
+    for (let i = 0; i < currentMonth.length; i++) {
+      for (let j = 0; j < 7; j++) {
+        let day = document.createElement('div');
+        if (currentMonth[i][j].notCurrentMonth === true) {
+          day.innerHTML = '';
+        } else {
+          day.classList.add('calendar-day');
+          day.innerHTML = currentMonth[i][j].dayOfMonth;
+          day.dataset.dayOfMonth = currentMonth[i][j].dayOfMonth;
+          day.dataset.notCurrentMonth = currentMonth[i][j].notCurrentMonth;
+          day.dataset.selectedDay = currentMonth[i][j].selectedDay;
+          day.dataset.currentDay = currentMonth[i][j].currentDay;
+          day.style.fontSize = '14px'
+          const numCurrMonth = new Date().getMonth() + 1;
+          const numCurrYear = new Date().getFullYear();
+          const numCurrDay = new Date().getDate();
+          const colorIrrelivantDay = '#BFBFBF';
+          const colorCurrentDay = '#3077C6';
+          if (this.month === numCurrMonth && this.year === numCurrYear) {
+            if (currentMonth[i][j].dayOfMonth < numCurrDay) {
+              day.style.color = colorIrrelivantDay;
+            } else if (currentMonth[i][j].dayOfMonth === numCurrDay) {
+              day.style.color = colorCurrentDay;
+            }
+          }
+        }
+        tableTbody.appendChild(day);
+      }
+     
+    }
+    return tableTbody
+  }
+}
+
+
+const dateWrapper = document.querySelector('#date');
+dateWrapper.addEventListener('click', (e) => {
+  const calendar = document.querySelector('#calendar');
+  calendar.style.display = 'grid';
+  e.stopPropagation();
+  calendar.appendChild(new CalendarPrint(new Date().getDay() - 1, new Date().getFullYear()).printMonth());
+  calendar.appendChild(new CalendarPrint(new Date().getDay(), new Date().getFullYear()).printMonth());
+  
+}, true);
+
+

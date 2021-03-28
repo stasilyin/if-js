@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: #666;
+    margin: 0 auto;
+    font-size: 12px;
+}
+
+.container {
+    padding-top: 5rem;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.input-open-file {
+    width: 0;
+    height: 0;
+    opacity: 0;
+    position: absolute;
+}
+.upload-file {
+    border-radius: 6px;
+    background: #fff;
+    padding: 1rem;
+    box-shadow: 2px 3px 10px rgba(0, 0, 0, .2);
+}
+.btn-wrap {
+    border: 1px solid #42b983;
+    border-radius: 99px;
+    padding: 0.5rem 1.5rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all .2s;
+    background: #fff;
+    width: 40px;
+}
+.submit-btn-wrap {
+    margin-left: 40px;
+}
+.btn-wrap:hover {
+    cursor: pointer;
+    opacity: 0.8;
+    background-color: rgb(238, 224, 224);
+}
+img {
+    width: 100px;
+    margin: 10px 0;
+}
+.image-container::before {
+    content: "Image preview";
+    position: absolute;
+    top: 2px;
+    left: 10px;
+    text-transform: uppercase;
+}
+.info-file-container {
+    position: relative;
+}
+.info-file-container::before {
+    content: "File information";
+    position: absolute;
+    top: 2px;
+    left: 10px;
+    text-transform: uppercase;
+}
+.image-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    position: relative;
+}
+#submit-btn {
+    width: 0;
+    height: 0;
+    opacity: 0;
+    position: absolute;
+}
