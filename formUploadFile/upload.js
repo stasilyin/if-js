@@ -48,6 +48,7 @@ document.getElementById("btn-open").addEventListener("change", function(ev) {
             infoFileContainer.appendChild(fileType);
             infoFileContainer.appendChild(fileSize);
             container.appendChild(infoFileContainer);
+            document.querySelector('.submit-btn-wrap').style.display = 'inline';
     } else {
         return;
     }
@@ -101,7 +102,7 @@ formUpload.addEventListener('submit', async event => {
                             text-align: center;
                             text-transform: uppercase;
                             opacity: 1;
-                            transition: all 2s;
+                            transition: all 1s;
                             `
     serverResponse.innerHTML = `<span>You have successfully sent the file ${res.fileName}</span>`
     container.appendChild(serverResponse);
@@ -109,8 +110,8 @@ formUpload.addEventListener('submit', async event => {
         serverResponse.style.opacity = 0;
         setTimeout (() => {
             serverResponse.remove();
-        }, 2000)                 
-    }, 3000)
+        }, 1000)                 
+    }, 1500)
 
 });
 
