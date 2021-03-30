@@ -1,4 +1,3 @@
-
 function readFile(file){
     return new Promise(function(resolve,reject){
         let fr = new FileReader();

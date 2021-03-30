@@ -74,16 +74,22 @@ const blockPeopleAdd = document.querySelector('.header-people-add')
 inputPeople.addEventListener('click', (e) => {
   e.stopPropagation();
   formTextPeople.style.display = "block";
+  const calendar = document.querySelector('#calendar');
+  if (calendar) calendar.style.display = 'none';
   changeColor();
 }, true);
 document.addEventListener('click', (e) => {
   e.stopPropagation();
   formTextPeople.style.display = "none";
   const calendar = document.querySelector('#calendar');
-  /* const calendarMonth = document.querySelector('.calend-wrapper'); */
-  calendar.firstChild.remove();
-  calendar.lastChild.remove();
-  calendar.style.display = 'none';
+  const inputDate = document.querySelector('#date');
+  if (inputDate.value) {
+    calendar.style.display = 'none';
+  } else {
+    if (calendar.firstChild) calendar.firstChild.remove();
+    if (calendar.lastChild) calendar.lastChild.remove();
+    calendar.style.display = 'none';
+  }
 }, false);
 
 
@@ -357,14 +363,17 @@ class CalendarPrint {
           day.dataset.selectedDay = currentMonth[i][j].selectedDay;
           day.dataset.currentDay = currentMonth[i][j].currentDay;
           day.style.fontSize = '14px'
-          const numCurrMonth = new Date().getMonth() + 1;
+          day.dataset.month = this.month;
+          day.dataset.year = this.year;
+          const numCurrMonth = new Date().getMonth();
           const numCurrYear = new Date().getFullYear();
           const numCurrDay = new Date().getDate();
           const colorIrrelivantDay = '#BFBFBF';
           const colorCurrentDay = '#3077C6';
-          if (this.month === numCurrMonth && this.year === numCurrYear) {
+          if ((this.month - 1) === numCurrMonth && this.year === numCurrYear) {
             if (currentMonth[i][j].dayOfMonth < numCurrDay) {
               day.style.color = colorIrrelivantDay;
+              day.dataset.irrelivantDay = true;
             } else if (currentMonth[i][j].dayOfMonth === numCurrDay) {
               day.style.color = colorCurrentDay;
             }
@@ -372,7 +381,6 @@ class CalendarPrint {
         }
         tableTbody.appendChild(day);
       }
-     
     }
     return tableTbody
   }
@@ -381,12 +389,113 @@ class CalendarPrint {
 
 const dateWrapper = document.querySelector('#date');
 dateWrapper.addEventListener('click', (e) => {
-  const calendar = document.querySelector('#calendar');
-  calendar.style.display = 'grid';
   e.stopPropagation();
-  calendar.appendChild(new CalendarPrint(new Date().getDay() - 1, new Date().getFullYear()).printMonth());
-  calendar.appendChild(new CalendarPrint(new Date().getDay(), new Date().getFullYear()).printMonth());
+  const calendar = document.querySelector('#calendar');
+  const inputDate = document.querySelector('#date')
   
+  if (calendar.style.display = 'none' && inputDate.value !== "") {
+    calendar.style.display = 'grid';
+    generateSelectedDays();
+  } else {
+    calendar.style.display = 'grid';
+    if (calendar.firstChild) return;
+    calendar.appendChild(new CalendarPrint(new Date().getMonth() + 1, new Date().getFullYear()).printMonth());
+    calendar.appendChild(new CalendarPrint(new Date().getMonth() + 2, new Date().getFullYear()).printMonth());
+    dayClick();
+  }
 }, true);
 
+let checkInDay = 0;
+let checkInDayElement = '';
+let checkOutDay = 0;
+let checkOutDayElement = '';
+let countClick = 0;
+const dayClick = () => document.querySelectorAll('.calendar-day').forEach(element => {
+  let dateInput = document.querySelector('#date');
+  element.addEventListener('click', (e) => {
+    const currentElement = e.target;
+    if (currentElement.dataset.irrelivantDay)  return;
+    if (checkInDay && checkOutDay) {
+      checkInDayElement.style += `background-color: #fff; color: #333333`;
+      checkOutDayElement.style += `background-color: #fff; color: #333333`;
+      checkInDayElement.dataset.checkInDay = false;
+      checkOutDayElement.dataset.checkInDay = false;
+      checkInDayElement.dataset.selectedDay = false;
+      checkOutDayElement.dataset.selectedDay = false;
+      dateInput.value = '';
+      checkInDayElement = '';
+      checkOutDayElement = '';
+      checkInDay = 0;
+      checkOutDay = 0;
+      defaultStyleCalendar();
+    }
+    const isElementThanThePrevious = (checkInDay === 0) || (currentElement.dataset.dayOfMonth < checkInDay && currentElement.dataset.month <= checkInDayElement.dataset.month) || (currentElement.dataset.dayOfMonth > checkInDay && currentElement.dataset.month < checkInDayElement.dataset.month);
+    if (isElementThanThePrevious) {
+      console.log(checkInDay);
+      currentElement.dataset.checkInDay = true;
+      currentElement.dataset.selectedDay = true;
+      currentElement.style = `background-color: #3077C6; color: #fff`;
+      checkInDay = +element.dataset.dayOfMonth;
+      if(checkInDayElement) checkInDayElement.style = `background-color: #fff; color: #333333`;
+      if(checkInDayElement) checkInDayElement.dataset.checkInDay = false;
+      if(checkInDayElement) checkInDayElement.dataset.selectedDay = false;
+      checkInDayElement = currentElement;
+      let valueIn = changeFormatDate(element.dataset.dayOfMonth + '.' + element.dataset.month + '.' + element.dataset.year);
+      dateInput.value = valueIn;
+    } else {
+      currentElement.dataset.checkOutDay = true;
+      currentElement.dataset.selectedDay = true;
+      currentElement.style = `background-color: #3077C6; color: #fff`;
+      checkOutDay = +element.dataset.dayOfMonth;
+      if(checkOutDayElement) checkOutDayElement.style = `background-color: #fff; color: #333333`;
+      if(checkOutDayElement) checkOutDayElement.dataset.checkOutDay = false;
+      if(checkOutDayElement) checkOutDayElement.dataset.selectedDay = false;
+      checkOutDayElement = currentElement;
+      const calendar = document.querySelector('#calendar');
+      let valueOut = element.dataset.dayOfMonth + '.' + element.dataset.month + '.' + element.dataset.year;
+      dateInput.value = dateInput.value.substr(0, 10) + ' - ' + changeFormatDate(valueOut);
+      calendar.style.display = 'none';
+    } 
+  })
+})
 
+function changeFormatDate (date) {
+  const res = [];
+  date.split('.').map(element => {
+    if (String(element).length === 1) {
+      let res = '0' + element;
+      element = res;
+    }
+    res.push(element)
+  })
+  return res.join('.');
+}
+
+function generateSelectedDays () {
+  document.querySelectorAll('.calendar-day').forEach(element => {
+    const elementOfDay = Number(element.dataset.dayOfMonth);
+    const elementOfMonth = Number(element.dataset.month);
+    const inMonth = Number(checkInDayElement.dataset.month);
+    const outMonth = Number(checkOutDayElement.dataset.month);
+    const isSelectedDay = (((elementOfDay > checkInDay && elementOfDay < checkOutDay) && elementOfMonth === inMonth)) ||
+      ((elementOfDay > checkOutDay && elementOfDay > checkInDay) && elementOfMonth >= inMonth) ||
+      ((elementOfDay < checkOutDay && elementOfDay < checkInDay) && elementOfMonth > inMonth);
+    if (isSelectedDay) {
+      if ((element.dataset.checkOutDay || element.dataset.checkInDay || element.dataset.checkInDay === true)) return
+      if (elementOfDay > checkOutDay && elementOfMonth === outMonth) return;
+      element.style.backgroundColor = '#F3F3F4';
+      element.dataset.selectedDay = true;
+    }
+  })
+}
+
+function defaultStyleCalendar() { 
+  document.querySelectorAll('.calendar-day').forEach(element => {
+    const defaulBackColor = '#fff';
+    const selectedBackColor = 'rgb(243, 243, 244)';
+    if (element.style.backgroundColor === selectedBackColor) {
+      element.dataset.selectedDay = false;
+      element.style.backgroundColor = defaulBackColor;
+    }
+  })
+}
