@@ -1,0 +1,46 @@
+.calendar-wrap {
+  position: relative;
+}
+.calend-wrapper {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  grid-template-areas:
+    "T T T T T T T"
+    ". . . . . . ."
+    ". . . . . . ."
+    ". . . . . . ."
+    ". . . . . . ."
+    ". . . . . . .";
+  justify-items: center;
+  padding: 0 22px;
+}
+.headerCalen {
+  grid-area: T;
+}
+#calendar {
+  position: absolute;
+  display: none;
+  grid-template-columns: repeat(2, 1fr);
+  background-color: #fff;
+  border-radius: 8px;
+  margin-top: 12px;
+  margin-left: 35%;
+  padding-top: 12px;
+  /* padding-left: 23px;
+  padding-right: 23px; */
+  padding-bottom: 18px;
+  text-align: center;
+}
+.calendar-day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  
+}
+.calendar-day:hover {
+  background-color: #bfbfbf;
+  cursor: pointer;
+}
