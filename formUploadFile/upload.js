@@ -103,7 +103,7 @@ formUpload.addEventListener('submit', async event => {
                             opacity: 1;
                             transition: all 1s;
                             `
-    serverResponse.innerHTML = `<span>You have successfully sent the file ${res.fileName}</span>`
+    serverResponse.innerHTML = `<span>You have successfully sent the file ${res.fileName}</span>`;
     container.appendChild(serverResponse);
     setTimeout(() => {
         serverResponse.style.opacity = 0;

@@ -392,7 +392,9 @@ dateWrapper.addEventListener('click', (e) => {
   e.stopPropagation();
   const calendar = document.querySelector('#calendar');
   const inputDate = document.querySelector('#date')
-  
+  const formChildren = document.querySelector('.header-people-wrapper');
+  if (formChildren.style.display === 'block') formChildren.style.display = 'none'
+  console.log(formChildren.style.display)
   if (calendar.style.display = 'none' && inputDate.value !== "") {
     calendar.style.display = 'grid';
     generateSelectedDays();
