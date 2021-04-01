@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Homework</title>
     <link rel="stylesheet" href="./css/style.css" />
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
   </head>
   <body>
     <header>
@@ -45,20 +45,20 @@
           <form class="header-form row" id="header-form">
             <div class="header-form-input-row">
               <div class="header-form-input__wrap">
-                <input type="text" id="city" required />
+                <input type="text" id="city" name = 'search' required />
                 <label for="city" class="city">Your destination or hotel name</label>
               </div>
               <div class="header-form-input__wrap">
-                <input type="text" id="date" required/>
+                <input type="text" id="date" required name = "date"/>
                 <label for="date" class="date">Check-in — Check-out</label>
               </div>
-                <div class="header-form-input__wrap" id = "header-form-input__wrap-people"><input type="text" id="people" required /><label for="people"
+                <div class="header-form-input__wrap" id = "header-form-input__wrap-people"><input type="text" id="people" required name = 'people' /><label for="people"
                     class="people" id = "label_people">Adults - Children - Room</label></div>
-                <div class="header-form-input__wrap"><input type="submit" value="Search" /></div>
+                <div class="header-form-input__wrap"><input type="submit" value="Search"/></div>
               </div>
               <div class="header-people-wrapper" id = "header-form-one" onclick= "event.stopPropagation()"></div>
               <div class="calendar-wrap"><div id = "calendar" onclick= "event.stopPropagation()"></div></div>
-              <div class="header-form-mobile_row">
+<!--               <div class="header-form-mobile_row">
                   <div class="header-form-mobile__search">
                     <svg viewBox="0 0 16 16" class="search-icon">
                       <use xlink:href="./img/sprite.svg#search-icon"></use>
@@ -95,7 +95,7 @@
             <div class="header-form-mobile__search-btn">
               <input type="submit" class="search_btn" value="Search">
             </div>
-          </div>
+          </div> -->
           </form>
           <div class="header-download-link-row">
             <img src="./img/google-play-badge.svg" alt="download link Google Play">

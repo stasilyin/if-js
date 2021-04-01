@@ -113,4 +113,3 @@ formUpload.addEventListener('submit', async event => {
     }, 1500)
 
 });
-

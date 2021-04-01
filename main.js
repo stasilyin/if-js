@@ -34,7 +34,7 @@ async function renderRequestForGuestLoves(requestUrl) {
         </figcaption>
       </figure>`;
   });
-  new Swiper('.guest-loves__swiper-container', {
+ new Swiper('.guest-loves__swiper-container', {
     slideClass: 'guests-loves__swiper-slide',
     wrapperClass: 'guest-loves__swiper-wrapper',
     navigation: {
@@ -59,13 +59,13 @@ async function renderRequestForGuestLoves(requestUrl) {
 const formTextPeople = document.querySelector('.header-people-wrapper');
 formTextPeople.innerHTML = `<div class="header-people-add">
   <div class="header-people__row">
-    <span>Adults</span> <div class = "header-people__row__button"><a class="header-people-buttons header-people-buttons__minus" id = "dellAdults">-</a><span class="header-people__row__button-value">0</span><a class="header-people-buttons header-people-buttons__plus" id = "addAdults">+</a></div>
+    <span>Adults</span> <div class = "header-people__row__button"><a class="header-people-buttons header-people-buttons__minus" id = "dellAdults">-</a><span class="header-people__row__button-value" id = "value-adults">0</span><a class="header-people-buttons header-people-buttons__plus" id = "addAdults">+</a></div>
   </div>
   <div class="header-people__row">
     <span>Children</span><div class = "header-people__row__button"><a class="header-people-buttons header-people-buttons__minus" id = "dellChildren">-</a><span class="header-people__row__button-value" id = "value-children">0</span><a class="header-people-buttons header-people-buttons__plus" id = "addChildren">+</a></div>
   </div>
   <div class="header-people__row">
-    <span>Rooms</span><div class = "header-people__row__button"><a class="header-people-buttons header-people-buttons__minus" id = "dellRooms">-</a><span class="header-people__row__button-value">0</span><a class="header-people-buttons header-people-buttons__plus" id = "addRooms">+</a></div>
+    <span>Rooms</span><div class = "header-people__row__button"><a class="header-people-buttons header-people-buttons__minus" id = "dellRooms">-</a><span class="header-people__row__button-value" id = "value-rooms">0</span><a class="header-people-buttons header-people-buttons__plus" id = "addRooms">+</a></div>
   </div>
   </div>`;
 const inputPeople = document.querySelector('#header-form-input__wrap-people');
@@ -500,4 +500,112 @@ function defaultStyleCalendar() {
       element.style.backgroundColor = defaulBackColor;
     }
   })
+}
+
+const searchForm = document.querySelector('#header-form');
+searchForm.addEventListener('submit', async (e) => {
+  if(document.querySelector('.аvailable-hotels')) document.querySelector('.аvailable-hotels').remove();
+  e.preventDefault();
+  const paramForSearchData = {
+    search:'',
+    adults:0,
+    children: [],
+    rooms:0,
+  };
+  paramForSearchData.search = document.querySelector('#city').value;
+  paramForSearchData.adults = +document.querySelector('#value-adults').innerHTML;
+  paramForSearchData.children = [];
+  const selectChildren = document.querySelectorAll('select');
+  if (selectChildren) {
+    selectChildren.forEach (currentSelect => {
+      paramForSearchData.children.push(currentSelect.value);
+    })
+  } else {
+    paramForSearchData.children = 0;
+  }
+  paramForSearchData.rooms = +document.querySelector('#value-rooms').innerHTML;
+  if (paramForSearchData.adults === 0 && paramForSearchData.children > 0) {
+    windowError('Введите количество взрослых');
+    return;
+  } else if (paramForSearchData.rooms < 1) {
+    windowError('Введите количество комнат');
+    return;
+  } else {
+    document.querySelector('#header-form').reset();
+  }
+  if (paramForSearchData.children.length === 0) paramForSearchData.children = [0];
+  const {search, adults, children, rooms} = paramForSearchData;
+  const urlForSearch = `https://fe-student-api.herokuapp.com/api/hotels?search=${search}&adults=${adults}&children=${children.join(',')}&rooms=${rooms}`;
+  const dataOfSearch = await getDateWithRequest(urlForSearch);
+  const sectionAvailableHotels = document.createElement('section');
+  sectionAvailableHotels.classList.add('аvailable-hotels');
+  const sectionAvailableHotelsContainer = document.createElement('div');
+  sectionAvailableHotelsContainer.classList.add('container');
+  sectionAvailableHotels.appendChild(sectionAvailableHotelsContainer);
+  const titleAvailableHotels = document.createElement('h2');
+  titleAvailableHotels.textContent = `Available hotels`;
+  sectionAvailableHotelsContainer.appendChild(titleAvailableHotels);
+  const header = document.querySelector('header');
+  if (dataOfSearch.length >= 1) {
+    const availableHotelsCardWrap = document.createElement('div');
+    availableHotelsCardWrap.classList.add('аvailable-hotels__card-wrap');
+    sectionAvailableHotelsContainer.appendChild(availableHotelsCardWrap);
+    dataOfSearch.forEach( currentValue => {
+     availableHotelsCardWrap.innerHTML += `<div class = 'аvailable-hotels__card'>
+        <div class = 'аvailable-hotels__card__img'><img src = ${currentValue.imageUrl} alt = ${currentValue.name}></div>
+        <span class = 'аvailable-hotels__card-name-hotels'>${currentValue.name}</span>
+        <span class = 'аvailable-hotels__card-city-hotels'>${currentValue.city}, ${currentValue.country}</span>
+        </div>` 
+      header.after(sectionAvailableHotels);
+      let dalayElement = 0
+      document.querySelectorAll('.аvailable-hotels__card').forEach(element => {
+        element.style.transitionDelay = dalayElement + 'ms';
+        dalayElement += 700;
+        setTimeout(() => { 
+        element.style.opacity = 1;
+      }, 0)
+      })
+    }) 
+  } else {
+    const availableHotelsCardWrap = document.createElement('div');
+    sectionAvailableHotels.appendChild(availableHotelsCardWrap);
+    availableHotelsCardWrap.style.fontSize = '3rem';
+    availableHotelsCardWrap.style.textAlign = 'center';
+    availableHotelsCardWrap.style.marginTop = '30px';
+    availableHotelsCardWrap.textContent = 'The search has not given any results';
+    header.after(sectionAvailableHotels);
+  }
+ 
+ 
+})
+
+function windowError(error) {
+  const header = document.querySelector('header');
+  const winErrorWrap = document.createElement('div');
+  winErrorWrap.style = `background-color: #fff; 
+                        border-radius: 8px; 
+                        border: 1px #3077C6 solid;
+                        text-align: center;
+                        font-size: 24px;
+                        position: absolute;
+                        padding: 20px 20px;
+                        box-shadow: 2px 3px 10px rgba(0, 0, 0, .2);
+                        width: 0;
+                        opacity: 0;
+                        transition: opacity .3s;
+                        top: 57%;
+                        left: 44%;`;
+  header.appendChild(winErrorWrap);
+  winErrorWrap.innerHTML = error;
+  setTimeout(() => {
+    winErrorWrap.style.width = '200px';
+    winErrorWrap.style.height = '130px';
+    winErrorWrap.style.opacity = 1;
+    setTimeout(() => {
+      winErrorWrap.style.opacity = 0;
+      setTimeout(() => {
+        winErrorWrap.remove();
+      }, 300);
+    }, 1000);
+  }, 0);
 }

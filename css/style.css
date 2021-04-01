@@ -667,3 +667,46 @@ select {
 input[type=date]:required:invalid::-webkit-datetime-edit {
   color: transparent;
 }
+.аvailable-hotels__card-wrap {
+  display: flex;
+  flex-wrap: nowrap;
+  margin-top: 105px;
+}
+.аvailable-hotels__card {
+  max-width: 25%;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 1;
+  margin: 0 8px;
+  opacity: 0;
+  transition: opacity 1s;
+}
+.аvailable-hotels__card__img {
+  width: 100%;
+  height: 100%;
+  max-width: 295px;
+  max-height: 295px;
+}
+.аvailable-hotels__card img {
+  object-fit:none;
+  object-position: center;
+  width: 100%;
+  height: 100%;
+}
+.аvailable-hotels__card-name-hotels {
+  font-size: 2rem;
+  color: #3077C6;
+  line-height: 28px;
+  margin: 24px 0;
+}
+.аvailable-hotels__card-city-hotels {
+  font-size: 2rem;
+  color: #bfbfbf;
+  line-height: 28px;
+}
+.аvailable-hotels h2 {
+  text-align: center;
+}
+.аvailable-hotels {
+  padding: 120px 0;
+}
