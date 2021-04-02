@@ -1,6 +1,7 @@
 const requestUrl = 'https://fe-student-api.herokuapp.com/api/hotels/popular';
 const divElement = document.querySelector('#guest-loves');
-function getDateWithRequest (url) {
+
+function getDateWithRequest(url) {
   return fetch(url).then(response => {
     if (response.ok) {
       return response.json();
@@ -14,6 +15,7 @@ function getDateWithRequest (url) {
 }
 
 renderRequestForGuestLoves(requestUrl);
+
 async function renderRequestForGuestLoves(requestUrl) {
   let dataForGuestLoves = '';
   if (sessionStorage.getItem('dataForGuestLoves')) {
@@ -34,6 +36,7 @@ async function renderRequestForGuestLoves(requestUrl) {
         </figcaption>
       </figure>`;
   });
+
  new Swiper('.guest-loves__swiper-container', {
     slideClass: 'guests-loves__swiper-slide',
     wrapperClass: 'guest-loves__swiper-wrapper',
@@ -149,6 +152,7 @@ const changeColor = () => document.querySelectorAll('.header-people__row__button
     element.previousSibling.style.borderColor = colorLightDenim;
     element.previousSibling.style.color = colorLightDenim;
   }
+
   if (+element.innerHTML === 30 || (+element.innerHTML === 10 && element.id === 'value-children')) {
     element.nextSibling.style.borderColor = colorLightTelegrey;
     element.nextSibling.style.color = colorLightTelegrey;
@@ -181,10 +185,11 @@ const addChildren = (event) => {
   const idAddRoomsBtn = 'addRooms';
   const idAddChildrenBtn = 'addChildren';
   let value = +event.target.previousSibling.innerHTML;
-  console.log(value)
+
   if ((event.target.id === idAddAdultsBtn || event.target.id === idAddRoomsBtn) && (value < 30 && value >= 0)) {
     event.target.previousSibling.innerHTML = ++value;
   }
+
   if (event.target.id === idAddChildrenBtn && value === 0) {
     event.target.previousSibling.innerHTML = ++value;
     generateSelect(event);
@@ -319,16 +324,17 @@ Date.prototype.dayOfWeek = function(year, month) {
 }
 
 class CalendarPrint {
-  constructor (month, year) {
+  constructor(month, year) {
     this.month = month;
     this.year = year;
   }
-  printMonth () {
+
+  printMonth() {
     const getObjectMonth = {
-      daysInMonth: new Date().daysInMonth(this.year,this.month),
+      daysInMonth: new Date().daysInMonth(this.year, this.month),
       daysInWeek: 7,
       dayOfWeek: new Date().dayOfWeek(this.year, this.month),
-    }
+    };
     const currentMonth = new Calendar(getObjectMonth).getCurrMonth();
     const tableTbody = document.createElement('div');
     tableTbody.classList.add('calend-wrapper');
@@ -337,22 +343,23 @@ class CalendarPrint {
     tableCaption.style.fontSize = '18px';
     tableCaption.classList.add('headerCalen');
     const monthes = ['January', 'February', 'March', 'April', 'May', 'June ', 'July ', 'August ', 'September ', 'October', 'November', 'December'];
-    const daysWeek = ['Mo','Tu','We','Th','Fr','Sa','Su'];
+    const daysWeek = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
     tableCaption.innerHTML = monthes[new Date(this.year,this.month).getMonth() - 1] + ' ' + this.year;
     tableTbody.appendChild(tableCaption);
-    
-    let i = 0;
-    while(i < daysWeek.length) {
+    let countForWhile = 0;
+
+    while (countForWhile < daysWeek.length) {
       const rowsTableWeek = document.createElement('div');
       rowsTableWeek.innerHTML = daysWeek[i];
       rowsTableWeek.style.fontSize = '14px';
       tableTbody.appendChild(rowsTableWeek);
-      i++;
+      countForWhile++;
     }
                                              
     for (let i = 0; i < currentMonth.length; i++) {
       for (let j = 0; j < 7; j++) {
-        let day = document.createElement('div');
+        const day = document.createElement('div');
+
         if (currentMonth[i][j].notCurrentMonth === true) {
           day.innerHTML = '';
         } else {
@@ -362,7 +369,7 @@ class CalendarPrint {
           day.dataset.notCurrentMonth = currentMonth[i][j].notCurrentMonth;
           day.dataset.selectedDay = currentMonth[i][j].selectedDay;
           day.dataset.currentDay = currentMonth[i][j].currentDay;
-          day.style.fontSize = '14px'
+          day.style.fontSize = '14px';
           day.dataset.month = this.month;
           day.dataset.year = this.year;
           const numCurrMonth = new Date().getMonth();
@@ -370,6 +377,7 @@ class CalendarPrint {
           const numCurrDay = new Date().getDate();
           const colorIrrelivantDay = '#BFBFBF';
           const colorCurrentDay = '#3077C6';
+
           if ((this.month - 1) === numCurrMonth && this.year === numCurrYear) {
             if (currentMonth[i][j].dayOfMonth < numCurrDay) {
               day.style.color = colorIrrelivantDay;
@@ -379,30 +387,35 @@ class CalendarPrint {
             }
           }
         }
+
         tableTbody.appendChild(day);
       }
     }
-    return tableTbody
+    return tableTbody;
   }
 }
-
 
 const dateWrapper = document.querySelector('#date');
 dateWrapper.addEventListener('click', (e) => {
   e.stopPropagation();
   const calendar = document.querySelector('#calendar');
-  const inputDate = document.querySelector('#date')
+  const inputDate = document.querySelector('#date');
   const formChildren = document.querySelector('.header-people-wrapper');
-  if (formChildren.style.display === 'block') formChildren.style.display = 'none'
-  console.log(formChildren.style.display)
-  if (calendar.style.display = 'none' && inputDate.value !== "") {
+
+  if (formChildren.style.display === 'block') formChildren.style.display = 'none';
+  console.log(formChildren.style.display);
+
+  if (calendar.style.display === 'none' && inputDate.value !== '') {
     calendar.style.display = 'grid';
     generateSelectedDays();
   } else {
     calendar.style.display = 'grid';
+
     if (calendar.firstChild) return;
-    calendar.appendChild(new CalendarPrint(new Date().getMonth() + 1, new Date().getFullYear()).printMonth());
-    calendar.appendChild(new CalendarPrint(new Date().getMonth() + 2, new Date().getFullYear()).printMonth());
+    calendar.appendChild(new CalendarPrint(new Date().getMonth() 
+    + 1, new Date().getFullYear()).printMonth());
+    calendar.appendChild(new CalendarPrint(new Date().getMonth() 
+    + 2, new Date().getFullYear()).printMonth());
     dayClick();
   }
 }, true);
@@ -411,15 +424,21 @@ let checkInDay = 0;
 let checkInDayElement = '';
 let checkOutDay = 0;
 let checkOutDayElement = '';
-let countClick = 0;
-const dayClick = () => document.querySelectorAll('.calendar-day').forEach(element => {
-  let dateInput = document.querySelector('#date');
+const dayClick = () => document.querySelectorAll('.calendar-day').forEach((element) => {
+  const dateInput = document.querySelector('#date');
   element.addEventListener('click', (e) => {
     const currentElement = e.target;
-    if (currentElement.dataset.irrelivantDay)  return;
+    const isElementThanThePrevious = (checkInDay === 0)
+    || (currentElement.dataset.dayOfMonth < checkInDay
+    && currentElement.dataset.month <= checkInDayElement.dataset.month)
+    || (currentElement.dataset.dayOfMonth > checkInDay
+    && currentElement.dataset.month < checkInDayElement.dataset.month);
+
+    if (currentElement.dataset.irrelivantDay) return;
+
     if (checkInDay && checkOutDay) {
-      checkInDayElement.style += `background-color: #fff; color: #333333`;
-      checkOutDayElement.style += `background-color: #fff; color: #333333`;
+      checkInDayElement.style += 'background-color: #fff; color: #333333';
+      checkOutDayElement.style += 'background-color: #fff; color: #333333';
       checkInDayElement.dataset.checkInDay = false;
       checkOutDayElement.dataset.checkInDay = false;
       checkInDayElement.dataset.selectedDay = false;
@@ -431,154 +450,80 @@ const dayClick = () => document.querySelectorAll('.calendar-day').forEach(elemen
       checkOutDay = 0;
       defaultStyleCalendar();
     }
-    const isElementThanThePrevious = (checkInDay === 0) || (currentElement.dataset.dayOfMonth < checkInDay && currentElement.dataset.month <= checkInDayElement.dataset.month) || (currentElement.dataset.dayOfMonth > checkInDay && currentElement.dataset.month < checkInDayElement.dataset.month);
+
     if (isElementThanThePrevious) {
-      console.log(checkInDay);
       currentElement.dataset.checkInDay = true;
       currentElement.dataset.selectedDay = true;
-      currentElement.style = `background-color: #3077C6; color: #fff`;
+      currentElement.style = 'background-color: #3077C6; color: #fff';
       checkInDay = +element.dataset.dayOfMonth;
-      if(checkInDayElement) checkInDayElement.style = `background-color: #fff; color: #333333`;
-      if(checkInDayElement) checkInDayElement.dataset.checkInDay = false;
-      if(checkInDayElement) checkInDayElement.dataset.selectedDay = false;
+      if (checkInDayElement) checkInDayElement.style = 'background-color: #fff; color: #333333';
+      if (checkInDayElement) checkInDayElement.dataset.checkInDay = false;
+      if (checkInDayElement) checkInDayElement.dataset.selectedDay = false;
       checkInDayElement = currentElement;
-      let valueIn = changeFormatDate(element.dataset.dayOfMonth + '.' + element.dataset.month + '.' + element.dataset.year);
+      const valueIn = changeFormatDate(element.dataset.dayOfMonth + '.' + element.dataset.month + '.' + element.dataset.year);
       dateInput.value = valueIn;
     } else {
       currentElement.dataset.checkOutDay = true;
       currentElement.dataset.selectedDay = true;
-      currentElement.style = `background-color: #3077C6; color: #fff`;
+      currentElement.style = 'background-color: #3077C6; color: #fff';
       checkOutDay = +element.dataset.dayOfMonth;
-      if(checkOutDayElement) checkOutDayElement.style = `background-color: #fff; color: #333333`;
-      if(checkOutDayElement) checkOutDayElement.dataset.checkOutDay = false;
-      if(checkOutDayElement) checkOutDayElement.dataset.selectedDay = false;
+      if (checkOutDayElement) checkOutDayElement.style = 'background-color: #fff; color: #333333';
+      if (checkOutDayElement) checkOutDayElement.dataset.checkOutDay = false;
+      if (checkOutDayElement) checkOutDayElement.dataset.selectedDay = false;
       checkOutDayElement = currentElement;
       const calendar = document.querySelector('#calendar');
-      let valueOut = element.dataset.dayOfMonth + '.' + element.dataset.month + '.' + element.dataset.year;
+      const valueOut = element.dataset.dayOfMonth + '.' + element.dataset.month + '.' + element.dataset.year;
       dateInput.value = dateInput.value.substr(0, 10) + ' - ' + changeFormatDate(valueOut);
       calendar.style.display = 'none';
-    } 
-  })
-})
-
-function changeFormatDate (date) {
-  const res = [];
-  date.split('.').map(element => {
-    if (String(element).length === 1) {
-      let res = '0' + element;
-      element = res;
     }
-    res.push(element)
-  })
+  });
+});
+
+function changeFormatDate(date) {
+
+  const res = [];
+
+  date.split('.').map((element) => {
+
+    if (String(element).length === 1) {
+      const resIfNull = '0' + element;
+      element = resIfNull;
+    }
+    res.push(element);
+  });
   return res.join('.');
 }
 
-function generateSelectedDays () {
-  document.querySelectorAll('.calendar-day').forEach(element => {
+function generateSelectedDays() {
+
+  document.querySelectorAll('.calendar-day').forEach((element) => {
     const elementOfDay = Number(element.dataset.dayOfMonth);
     const elementOfMonth = Number(element.dataset.month);
     const inMonth = Number(checkInDayElement.dataset.month);
     const outMonth = Number(checkOutDayElement.dataset.month);
-    const isSelectedDay = (((elementOfDay > checkInDay && elementOfDay < checkOutDay) && elementOfMonth === inMonth)) ||
-      ((elementOfDay > checkOutDay && elementOfDay > checkInDay) && elementOfMonth >= inMonth) ||
-      ((elementOfDay < checkOutDay && elementOfDay < checkInDay) && elementOfMonth > inMonth);
+    const isSelectedDay = (inMonth === outMonth && elementOfDay > checkInDay
+    && elementOfDay < checkOutDay && elementOfMonth === outMonth)
+    || (inMonth < outMonth && ((elementOfDay > checkInDay && elementOfMonth === inMonth)
+    || (elementOfDay < checkOutDay && elementOfMonth === outMonth)));
+
     if (isSelectedDay) {
-      if ((element.dataset.checkOutDay || element.dataset.checkInDay || element.dataset.checkInDay === true)) return
-      if (elementOfDay > checkOutDay && elementOfMonth === outMonth) return;
+
+      if (element.dataset.checkOutDay === true || element.dataset.checkInDay === true) return;
       element.style.backgroundColor = '#F3F3F4';
       element.dataset.selectedDay = true;
     }
-  })
+  });
 }
-
-function defaultStyleCalendar() { 
-  document.querySelectorAll('.calendar-day').forEach(element => {
+function defaultStyleCalendar() {
+  document.querySelectorAll('.calendar-day').forEach((element) => {
     const defaulBackColor = '#fff';
     const selectedBackColor = 'rgb(243, 243, 244)';
     if (element.style.backgroundColor === selectedBackColor) {
       element.dataset.selectedDay = false;
       element.style.backgroundColor = defaulBackColor;
     }
-  })
+  });
 }
-
-const searchForm = document.querySelector('#header-form');
-searchForm.addEventListener('submit', async (e) => {
-  if(document.querySelector('.аvailable-hotels')) document.querySelector('.аvailable-hotels').remove();
-  e.preventDefault();
-  const paramForSearchData = {
-    search:'',
-    adults:0,
-    children: [],
-    rooms:0,
-  };
-  paramForSearchData.search = document.querySelector('#city').value;
-  paramForSearchData.adults = +document.querySelector('#value-adults').innerHTML;
-  paramForSearchData.children = [];
-  const selectChildren = document.querySelectorAll('select');
-  if (selectChildren) {
-    selectChildren.forEach (currentSelect => {
-      paramForSearchData.children.push(currentSelect.value);
-    })
-  } else {
-    paramForSearchData.children = 0;
-  }
-  paramForSearchData.rooms = +document.querySelector('#value-rooms').innerHTML;
-  if (paramForSearchData.adults === 0 && paramForSearchData.children > 0) {
-    windowError('Введите количество взрослых');
-    return;
-  } else if (paramForSearchData.rooms < 1) {
-    windowError('Введите количество комнат');
-    return;
-  } else {
-    document.querySelector('#header-form').reset();
-  }
-  if (paramForSearchData.children.length === 0) paramForSearchData.children = [0];
-  const {search, adults, children, rooms} = paramForSearchData;
-  const urlForSearch = `https://fe-student-api.herokuapp.com/api/hotels?search=${search}&adults=${adults}&children=${children.join(',')}&rooms=${rooms}`;
-  const dataOfSearch = await getDateWithRequest(urlForSearch);
-  const sectionAvailableHotels = document.createElement('section');
-  sectionAvailableHotels.classList.add('аvailable-hotels');
-  const sectionAvailableHotelsContainer = document.createElement('div');
-  sectionAvailableHotelsContainer.classList.add('container');
-  sectionAvailableHotels.appendChild(sectionAvailableHotelsContainer);
-  const titleAvailableHotels = document.createElement('h2');
-  titleAvailableHotels.textContent = `Available hotels`;
-  sectionAvailableHotelsContainer.appendChild(titleAvailableHotels);
-  const header = document.querySelector('header');
-  if (dataOfSearch.length >= 1) {
-    const availableHotelsCardWrap = document.createElement('div');
-    availableHotelsCardWrap.classList.add('аvailable-hotels__card-wrap');
-    sectionAvailableHotelsContainer.appendChild(availableHotelsCardWrap);
-    dataOfSearch.forEach( currentValue => {
-     availableHotelsCardWrap.innerHTML += `<div class = 'аvailable-hotels__card'>
-        <div class = 'аvailable-hotels__card__img'><img src = ${currentValue.imageUrl} alt = ${currentValue.name}></div>
-        <span class = 'аvailable-hotels__card-name-hotels'>${currentValue.name}</span>
-        <span class = 'аvailable-hotels__card-city-hotels'>${currentValue.city}, ${currentValue.country}</span>
-        </div>` 
-      header.after(sectionAvailableHotels);
-      let dalayElement = 0
-      document.querySelectorAll('.аvailable-hotels__card').forEach(element => {
-        element.style.transitionDelay = dalayElement + 'ms';
-        dalayElement += 700;
-        setTimeout(() => { 
-        element.style.opacity = 1;
-      }, 0)
-      })
-    }) 
-  } else {
-    const availableHotelsCardWrap = document.createElement('div');
-    sectionAvailableHotels.appendChild(availableHotelsCardWrap);
-    availableHotelsCardWrap.style.fontSize = '3rem';
-    availableHotelsCardWrap.style.textAlign = 'center';
-    availableHotelsCardWrap.style.marginTop = '30px';
-    availableHotelsCardWrap.textContent = 'The search has not given any results';
-    header.after(sectionAvailableHotels);
-  }
- 
- 
-})
-
 function windowError(error) {
   const header = document.querySelector('header');
   const winErrorWrap = document.createElement('div');
@@ -609,3 +554,81 @@ function windowError(error) {
     }, 1000);
   }, 0);
 }
+const searchForm = document.querySelector('#header-form');
+searchForm.addEventListener('submit', async (e) => {
+  if (document.querySelector('.аvailable-hotels')) document.querySelector('.аvailable-hotels').remove();
+  e.preventDefault();
+  const paramForSearchData = {
+    search: '',
+    adults: 0,
+    children: [],
+    rooms: 0,
+  };
+  paramForSearchData.search = document.querySelector('#city').value;
+  paramForSearchData.adults = +document.querySelector('#value-adults').innerHTML;
+  paramForSearchData.children = [];
+  const selectChildren = document.querySelectorAll('select');
+  if (selectChildren) {
+    selectChildren.forEach((currentSelect) => {
+      paramForSearchData.children.push(currentSelect.value);
+    });
+  } else {
+    paramForSearchData.children = 0;
+  }
+  paramForSearchData.rooms = +document.querySelector('#value-rooms').innerHTML;
+  if (paramForSearchData.adults === 0 && paramForSearchData.children > 0) {
+    windowError('Введите количество взрослых');
+    return;
+  } else if (paramForSearchData.rooms < 1) {
+    windowError('Введите количество комнат');
+    return;
+  } else if (paramForSearchData.rooms > 0 && paramForSearchData.adults === 0) {
+    windowError('Введите количество взрослых');
+    return;
+  } else {
+    document.querySelector('#header-form').reset();
+  }
+  if (paramForSearchData.children.length === 0) paramForSearchData.children = [0];
+  const { search, adults, children, rooms } = paramForSearchData;
+  const urlForSearch = `https://fe-student-api.herokuapp.com/api/hotels?search=${search}&adults=${adults}&children=${children.join(',')}&rooms=${rooms}`;
+  const dataOfSearch = await getDateWithRequest(urlForSearch);
+  const sectionAvailableHotels = document.createElement('section');
+  sectionAvailableHotels.classList.add('аvailable-hotels');
+  const sectionAvailableHotelsContainer = document.createElement('div');
+  sectionAvailableHotelsContainer.classList.add('container');
+  sectionAvailableHotels.appendChild(sectionAvailableHotelsContainer);
+  const titleAvailableHotels = document.createElement('h2');
+  titleAvailableHotels.textContent = 'Available hotels';
+  sectionAvailableHotelsContainer.appendChild(titleAvailableHotels);
+  const header = document.querySelector('header');
+
+  if (dataOfSearch.length >= 1) {
+    const availableHotelsCardWrap = document.createElement('div');
+    availableHotelsCardWrap.classList.add('аvailable-hotels__card-wrap');
+    sectionAvailableHotelsContainer.appendChild(availableHotelsCardWrap);
+    dataOfSearch.forEach((currentValue) => {
+      availableHotelsCardWrap.innerHTML += `<div class = 'аvailable-hotels__card'>
+        <div class = 'аvailable-hotels__card__img'><img src = ${currentValue.imageUrl} alt = ${currentValue.name}></div>
+        <span class = 'аvailable-hotels__card-name-hotels'>${currentValue.name}</span>
+        <span class = 'аvailable-hotels__card-city-hotels'>${currentValue.city}, ${currentValue.country}</span>
+        </div>`;
+      header.after(sectionAvailableHotels);
+      let dalayElement = 0;
+      document.querySelectorAll('.аvailable-hotels__card').forEach((element) => {
+        element.style.transitionDelay = dalayElement + 'ms';
+        dalayElement += 700;
+        setTimeout(() => {
+          element.style.opacity = 1;
+        }, 0);
+      });
+    });
+  } else {
+    const availableHotelsCardWrap = document.createElement('div');
+    sectionAvailableHotels.appendChild(availableHotelsCardWrap);
+    availableHotelsCardWrap.style.fontSize = '3rem';
+    availableHotelsCardWrap.style.textAlign = 'center';
+    availableHotelsCardWrap.style.marginTop = '30px';
+    availableHotelsCardWrap.textContent = 'The search has not given any results';
+    header.after(sectionAvailableHotels);
+  }
+});
