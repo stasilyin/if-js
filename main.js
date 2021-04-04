@@ -1,64 +1,5 @@
 const requestUrl = 'https://fe-student-api.herokuapp.com/api/hotels/popular';
 const divElement = document.querySelector('#guest-loves');
-
-function getDateWithRequest(url) {
-  return fetch(url).then(response => {
-    if (response.ok) {
-      return response.json();
-    }
-    return response.json().then( error => {
-      const err = new Error('Oops..., something went wrong');
-      err.data = error;
-      throw err;
-    })
-  });
-}
-
-renderRequestForGuestLoves(requestUrl);
-
-async function renderRequestForGuestLoves(requestUrl) {
-  let dataForGuestLoves = '';
-  if (sessionStorage.getItem('dataForGuestLoves')) {
-    dataForGuestLoves = JSON.parse(sessionStorage.getItem('dataForGuestLoves'));
-  } else {
-    dataForGuestLoves = await getDateWithRequest(requestUrl);
-    sessionStorage.setItem('dataForGuestLoves', JSON.stringify(dataForGuestLoves))
-  }
-  dataForGuestLoves.forEach((element) => {
-    divElement.innerHTML += `
-      <figure class="guests-loves__image-wrapper guests-loves__swiper-slide">
-        <div class="guests-loves__img-wrap">
-          <img src=${element.imageUrl} alt="Hotel photo" class="guests-loves__image-photo">
-        </div>
-        <figcaption class="guests-loves__dsc-wrapper">
-          <span class="guests-loves__dsc">${element.name}</span>
-          <span class="guests-loves__dsc-city">${element.city}, ${element.country}</span>
-        </figcaption>
-      </figure>`;
-  });
-
- new Swiper('.guest-loves__swiper-container', {
-    slideClass: 'guests-loves__swiper-slide',
-    wrapperClass: 'guest-loves__swiper-wrapper',
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
-    },
-    breakpoints: {
-      320: {
-        slidesPerView: 2,
-        spaceBetween: 16,
-        slidesPerGroup:2,
-      },
-      1200: {
-        slidesPerView: 4,
-        spaceBetween: 16,
-        slidesPerGroup:4,
-      },
-      },
-    });
-}
-
 const formTextPeople = document.querySelector('.header-people-wrapper');
 formTextPeople.innerHTML = `<div class="header-people-add">
   <div class="header-people__row">
@@ -72,29 +13,96 @@ formTextPeople.innerHTML = `<div class="header-people-add">
   </div>
   </div>`;
 const inputPeople = document.querySelector('#header-form-input__wrap-people');
-const blockPeopleAdd = document.querySelector('.header-people-add')
+const btnAddAll = document.querySelectorAll('.header-people-buttons__plus');
+const btnDelAll = document.querySelectorAll('.header-people-buttons__minus');
+
+function getDateWithRequest(url) {
+  return fetch(url).then((response) => {
+    if (response.ok) {
+      return response.json();
+    }
+
+    return response.json().then((error) => {
+      const err = new Error('Oops..., something went wrong');
+      err.data = error;
+      throw err;
+    });
+  });
+}
+
+renderRequestForGuestLoves(requestUrl);
+
+async function renderRequestForGuestLoves(url) {
+  let dataForGuestLoves = '';
+
+  if (sessionStorage.getItem('dataForGuestLoves')) {
+    dataForGuestLoves = JSON.parse(sessionStorage.getItem('dataForGuestLoves'));
+  } else {
+    dataForGuestLoves = await getDateWithRequest(url);
+    sessionStorage.setItem('dataForGuestLoves', JSON.stringify(dataForGuestLoves));
+  }
+
+  dataForGuestLoves.forEach((element) => {
+    divElement.innerHTML += `
+      <figure class="guests-loves__image-wrapper guests-loves__swiper-slide">
+        <div class="guests-loves__img-wrap">
+          <img src=${element.imageUrl} alt="Hotel photo" class="guests-loves__image-photo">
+        </div>
+        <figcaption class="guests-loves__dsc-wrapper">
+          <span class="guests-loves__dsc">${element.name}</span>
+          <span class="guests-loves__dsc-city">${element.city}, ${element.country}</span>
+        </figcaption>
+      </figure>`;
+  });
+
+  new Swiper('.guest-loves__swiper-container', {
+    slideClass: 'guests-loves__swiper-slide',
+    wrapperClass: 'guest-loves__swiper-wrapper',
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    breakpoints: {
+      320: {
+        slidesPerView: 2,
+        spaceBetween: 16,
+        slidesPerGroup: 2,
+      },
+      1200: {
+        slidesPerView: 4,
+        spaceBetween: 16,
+        slidesPerGroup: 4,
+      },
+    },
+  });
+}
 
 inputPeople.addEventListener('click', (e) => {
   e.stopPropagation();
-  formTextPeople.style.display = "block";
   const calendar = document.querySelector('#calendar');
+
+  formTextPeople.style.display = 'block';
   if (calendar) calendar.style.display = 'none';
+
   changeColor();
 }, true);
+
 document.addEventListener('click', (e) => {
   e.stopPropagation();
-  formTextPeople.style.display = "none";
   const calendar = document.querySelector('#calendar');
   const inputDate = document.querySelector('#date');
+  formTextPeople.style.display = 'none';
+  
   if (inputDate.value) {
     calendar.style.display = 'none';
   } else {
     if (calendar.firstChild) calendar.firstChild.remove();
+
     if (calendar.lastChild) calendar.lastChild.remove();
+
     calendar.style.display = 'none';
   }
 }, false);
-
 
 const generateSelect = (event) => {
   event.stopPropagation();
@@ -117,67 +125,75 @@ const generateSelect = (event) => {
       <option value = '17'>17 years old</option>
       </select>`;
   const selectionChildren = document.createElement('div');
-  selectionChildren.classList.add('header-people__info-children');
-  selectionChildren.innerHTML = `<span>What is the age of the child you’re travelling with?</span>`;
   const selectionItems = document.createElement('select');
+  let generateWhile = 0;
+
+  selectionChildren.classList.add('header-people__info-children');
+  selectionChildren.innerHTML = '<span>What is the age of the child you’re travelling with?</span>';
   selectionItems.classList.add('header-people__select-years-children');
   selectionItems.innerHTML = selectionItemsText;
-  let generateWhile = 0;
-  event.target.id === 'dellChildren' ?
-  generateWhile = event.target.nextSibling.innerHTML : generateWhile = event.target.previousSibling.innerHTML;
+  event.target.id === 'dellChildren'
+    ? generateWhile = event.target.nextSibling.innerHTML
+    : generateWhile = event.target.previousSibling.innerHTML;
+
   if (document.querySelector('.header-people__info-children')) {
     document.querySelector('.header-people__info-children').remove();
   }
   for (let i = 0; i < generateWhile; i++) {
+
     if (i === 0) {
       document.querySelector('.header-people-add').appendChild(selectionChildren);
       selectionChildren.appendChild(selectionItems);
     } else {
-      const selectionItems = document.createElement('select');
-      
-      selectionItems.classList.add('header-people__select-years-children');
-      selectionItems.innerHTML = selectionItemsText;
-      selectionChildren.appendChild(selectionItems);
+      const selectionItemsMore = document.createElement('select');
+      selectionItemsMore.classList.add('header-people__select-years-children');
+      selectionItemsMore.innerHTML = selectionItemsText;
+      selectionChildren.appendChild(selectionItemsMore);
     }
   }
 };
 
-const changeColor = () => document.querySelectorAll('.header-people__row__button-value').forEach(element => {
+const changeColor = () => document.querySelectorAll('.header-people__row__button-value').forEach((curBtn) => {
   const colorLightTelegrey = '#CECECE';
   const colorLightDenim = '#3077C6';
-  if (+element.innerHTML === 0) {
-    element.previousSibling.style.borderColor = colorLightTelegrey;
-    element.previousSibling.style.color = colorLightTelegrey;
+  if (+curBtn.innerHTML === 0) {
+    curBtn.previousSibling.style.borderColor = colorLightTelegrey;
+    curBtn.previousSibling.style.color = colorLightTelegrey;
   } else {
-    element.previousSibling.style.borderColor = colorLightDenim;
-    element.previousSibling.style.color = colorLightDenim;
+    curBtn.previousSibling.style.borderColor = colorLightDenim;
+    curBtn.previousSibling.style.color = colorLightDenim;
   }
 
-  if (+element.innerHTML === 30 || (+element.innerHTML === 10 && element.id === 'value-children')) {
-    element.nextSibling.style.borderColor = colorLightTelegrey;
-    element.nextSibling.style.color = colorLightTelegrey;
+  if (+curBtn.innerHTML === 30 || (+curBtn.innerHTML === 10 && curBtn.id === 'value-children')) {
+    curBtn.nextSibling.style.borderColor = colorLightTelegrey;
+    curBtn.nextSibling.style.color = colorLightTelegrey;
   } else {
-    element.nextSibling.style.borderColor = colorLightDenim;
-    element.nextSibling.style.color = colorLightDenim;
+    curBtn.nextSibling.style.borderColor = colorLightDenim;
+    curBtn.nextSibling.style.color = colorLightDenim;
   }
 });
+
 const generateValueInputPeople = () => {
   const allValue = document.querySelectorAll('.header-people__row__button-value');
   const result = [];
+  const inputPeopleInfo = document.querySelector('#people');
+  let finalValue = '';
+
   allValue.forEach((element) => {
     result.push(element.innerHTML);
   });
-  const inputPeopleInfo = document.querySelector('#people');
-  let finalValue = '';
-  for (const key in result) {
+
+  for (let key in result) {
     switch (key) {
       case '0': finalValue += result[key] + ' Adults - '; break;
       case '1': finalValue += result[key] + ' Children - '; break;
       case '2': finalValue += result[key] + ' Rooms'; break;
-    };
+    }
   }
+
   inputPeopleInfo.value = finalValue;
 };
+
 const addChildren = (event) => {
   event.stopPropagation();
   event.preventDefault();
@@ -186,7 +202,10 @@ const addChildren = (event) => {
   const idAddChildrenBtn = 'addChildren';
   let value = +event.target.previousSibling.innerHTML;
 
-  if ((event.target.id === idAddAdultsBtn || event.target.id === idAddRoomsBtn) && (value < 30 && value >= 0)) {
+  if (
+    (event.target.id === idAddAdultsBtn || event.target.id === idAddRoomsBtn)
+    && (value < 30 && value >= 0)
+  ) {
     event.target.previousSibling.innerHTML = ++value;
   }
 
@@ -197,9 +216,11 @@ const addChildren = (event) => {
     event.target.previousSibling.innerHTML = ++value;
     generateSelect(event);
   }
+
   changeColor();
   generateValueInputPeople();
 };
+
 const dellChildren = (event) => {
   event.stopPropagation();
   event.preventDefault();
@@ -207,7 +228,7 @@ const dellChildren = (event) => {
   const idDellAdultsBtn = 'dellAdults';
   const idDellRoomsBtn = 'dellRooms';
   const idDellChildrenBtn = 'dellChildren';
-  
+
   if ((event.target.id === idDellAdultsBtn || event.target.id === idDellRoomsBtn) && (value > 0)) {
     event.target.nextSibling.innerHTML = --value;
   }
@@ -215,11 +236,11 @@ const dellChildren = (event) => {
     event.target.nextSibling.innerHTML = --value;
     generateSelect(event);
   }
+
   changeColor();
   generateValueInputPeople();
 };
-const btnAddAll = document.querySelectorAll('.header-people-buttons__plus');
-const btnDelAll = document.querySelectorAll('.header-people-buttons__minus');
+
 btnAddAll.forEach((element) => {
   element.addEventListener('click', addChildren, true);
 });
@@ -227,135 +248,167 @@ btnDelAll.forEach((element) => {
   element.addEventListener('click', dellChildren, true);
 });
 
-Date.prototype.daysInMonth = function(year, month) {
+Date.prototype.daysInMonth = function (year, month) {
   month -= 1;
+
   return 32 - new Date(year, month, 32).getDate();
-}
-Date.prototype.dayOfWeek = function(year, month) {
-    month -= 1;
-    let firstDay = (new Date(year, month, 1));
-    let firstDayWeek = firstDay.getDay();
-    let t = firstDayWeek - 1;
-    if ( t < 0 ) {
-        t = 6;
-    }
-    return t + 1;
+};
+
+Date.prototype.dayOfWeek = function (year, month) {
+  month -= 1;
+  let firstDay = (new Date(year, month, 1));
+  let firstDayWeek = firstDay.getDay();
+  let t = firstDayWeek - 1;
+
+  if ( t < 0 ) {
+    t = 6;
   }
-   class Calendar {
-       constructor(dataMonth) {
-            this.dataMonth = dataMonth;
-       }
-       getCurrMonth() {
-        try {
-          let { daysInMonth, daysInWeek, dayOfWeek, checkInDay, checkOutDay } = this.dataMonth;
-          if (dayOfWeek > daysInWeek) throw new Error('День начала недели больше количества дней в неделе');
-          const result = [];
-          let countDays = 1;
-          for (let i = 0; i < Math.ceil(daysInMonth / daysInWeek); i++) {
-            result[i] = [];
+
+  return t + 1;
+};
+class Calendar {
+  constructor(dataMonth) {
+    this.dataMonth = dataMonth;
+  }
+  getCurrMonth() {
+    try {
+      let { daysInMonth, daysInWeek, dayOfWeek, checkInDay, checkOutDay } = this.dataMonth;
+
+      if (dayOfWeek > daysInWeek) throw new Error('День начала недели больше количества дней в неделе');
+
+      const result = [];
+      let countDays = 1;
+
+      for (let i = 0; i < Math.ceil(daysInMonth / daysInWeek); i++) {
+        result[i] = [];
+      }
+
+      if (dayOfWeek !== 1) {
+        countDays = daysInMonth - (dayOfWeek - 2);
+      }
+
+      for (let i = 0; i < result.length; i++) {
+        for (let j = 0; j < daysInWeek; j++) {
+
+          if (countDays > daysInMonth) {
+            countDays = 1;
           }
-          if (dayOfWeek !== 1) {
-            countDays = daysInMonth - (dayOfWeek - 2);
+
+          const day = { dayOfMonth: countDays, notCurrentMonth: false, selectedDay: false };
+          result[i].push(day);
+
+          if (result[0][j].dayOfMonth > 7) {
+            result[0][j].notCurrentMonth = true;
           }
-          for (let i = 0; i < result.length; i++) {
-            for (let j = 0; j < daysInWeek; j++) {
-              if (countDays > daysInMonth) {
-                countDays = 1;
-              }
-              const day = { dayOfMonth: countDays, notCurrentMonth: false, selectedDay: false };
-              result[i].push(day);
-              if (result[0][j].dayOfMonth > 7) {
-                result[0][j].notCurrentMonth = true;
-              }
-              if (result[i][j].dayOfMonth >= checkInDay && result[i][j].dayOfMonth
-                <= checkOutDay && result[i][j].notCurrentMonth === false) {
-                result[i][j].selectedDay = true;
-              }
-              ++countDays;
+
+          if (result[i][j].dayOfMonth >= checkInDay && result[i][j].dayOfMonth
+            <= checkOutDay && result[i][j].notCurrentMonth === false) {
+            result[i][j].selectedDay = true;
+          }
+
+          ++countDays;
+        }
+      }
+
+      const isLastDayLastWeek = () => {
+        for (let i = result.length - 1; i < result.length; i++) {
+          for (let j = 0; j < daysInWeek; j++) {
+
+            if (result[i][j].dayOfMonth === daysInMonth) {
+              return true;
             }
-          }
-          const isLastDayLastWeek = () => {
-            for (let i = result.length - 1; i < result.length; i++) {
-              for (let j = 0; j < daysInWeek; j++) {
-                if (result[i][j].dayOfMonth === daysInMonth) {
-                  return true;
-                }
-              }
-            }
-            return false;
-          };
-          if (!isLastDayLastWeek()) {
-            result.push([]);
-            for (let i = result.length - 1; i < result.length; i++) {
-              countDays = result[result.length - 2][daysInWeek - 1].dayOfMonth + 1;
-              for (let j = 0; j < daysInWeek; j++) {
-                if (countDays > daysInMonth) {
-                  countDays = 1;
-                }
-                const day = { dayOfMonth: countDays, notCurrentMonth: false, selectedDay: false };
-                result[i].push(day);
-                countDays++;
-              }
-            }
-          }
-          for (let i = 0; i < result.length; i++) {
-            for (let j = 0; j < daysInWeek; j++) {
-              if (result[result.length - 1][j].dayOfMonth >= 1
-                  && result[result.length - 1][j].dayOfMonth <= 7) {
-                result[result.length - 1][j].notCurrentMonth = true;
-              }
-              if (result[i][j].dayOfMonth >= checkInDay
-                  && result[i][j].dayOfMonth <= checkOutDay
-                  && result[i][j].notCurrentMonth === false) result[i][j].selectedDay = true;
-              if (new Date().getDate() === result[i][j].dayOfMonth
-                  && result[i][j].notCurrentMonth === false) {
-                result[i][j].currentDay = true;
-              } else {
-                result[i][j].currentDay = false;
-              }
-            }
-          }
-          return result;
           
-        } catch (e) {
-          return e;
-        } 
-   }
+          }
+        }
+        return false;
+      };
+
+      if (!isLastDayLastWeek()) {
+        result.push([]);
+
+        for (let i = result.length - 1; i < result.length; i++) {
+          countDays = result[result.length - 2][daysInWeek - 1].dayOfMonth + 1;
+
+          for (let j = 0; j < daysInWeek; j++) {
+
+            if (countDays > daysInMonth) {
+              countDays = 1;
+            }
+
+            const day = { dayOfMonth: countDays, notCurrentMonth: false, selectedDay: false };
+            result[i].push(day);
+            countDays++;
+          }
+        
+        }
+      }
+
+      for (let i = 0; i < result.length; i++) {
+        for (let j = 0; j < daysInWeek; j++) {
+
+          if (
+            result[result.length - 1][j].dayOfMonth >= 1
+            && result[result.length - 1][j].dayOfMonth <= 7
+          ) {
+            result[result.length - 1][j].notCurrentMonth = true;
+          }
+
+          if (
+            result[i][j].dayOfMonth >= checkInDay
+            && result[i][j].dayOfMonth <= checkOutDay
+            && result[i][j].notCurrentMonth === false
+          ) result[i][j].selectedDay = true;
+
+          if (new Date().getDate() === result[i][j].dayOfMonth
+              && result[i][j].notCurrentMonth === false) {
+            result[i][j].currentDay = true;
+          } else {
+            result[i][j].currentDay = false;
+          }
+        }
+      }
+
+      return result;
+    } catch (e) {
+      return e;
+    } 
+  }
 }
 
 class CalendarPrint {
-  constructor(month, year) {
+  constructor (month, year) {
     this.month = month;
     this.year = year;
   }
+  printMonth () {
 
-  printMonth() {
     const getObjectMonth = {
-      daysInMonth: new Date().daysInMonth(this.year, this.month),
+      daysInMonth: new Date().daysInMonth(this.year,this.month),
       daysInWeek: 7,
       dayOfWeek: new Date().dayOfWeek(this.year, this.month),
-    };
+    }
     const currentMonth = new Calendar(getObjectMonth).getCurrMonth();
     const tableTbody = document.createElement('div');
-    tableTbody.classList.add('calend-wrapper');
     const tableCaption = document.createElement('div');
+    const monthes = ['January', 'February', 'March', 'April', 'May', 'June ', 'July ', 'August ', 'September ', 'October', 'November', 'December'];
+    const daysWeek = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
+    let rowsTabelWeekCount = 0;
+
+    tableTbody.classList.add('calend-wrapper');
     tableCaption.style.fontWeight = '500';
     tableCaption.style.fontSize = '18px';
     tableCaption.classList.add('headerCalen');
-    const monthes = ['January', 'February', 'March', 'April', 'May', 'June ', 'July ', 'August ', 'September ', 'October', 'November', 'December'];
-    const daysWeek = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
-    tableCaption.innerHTML = monthes[new Date(this.year,this.month).getMonth() - 1] + ' ' + this.year;
+    tableCaption.innerHTML = monthes[new Date(this.year, this.month).getMonth() - 1] + ' ' + this.year;
     tableTbody.appendChild(tableCaption);
-    let countForWhile = 0;
-
-    while (countForWhile < daysWeek.length) {
+    
+    while (rowsTabelWeekCount < daysWeek.length) {
       const rowsTableWeek = document.createElement('div');
-      rowsTableWeek.innerHTML = daysWeek[i];
+      rowsTableWeek.innerHTML = daysWeek[rowsTabelWeekCount];
       rowsTableWeek.style.fontSize = '14px';
       tableTbody.appendChild(rowsTableWeek);
-      countForWhile++;
+      rowsTabelWeekCount++;
     }
-                                             
+                                      
     for (let i = 0; i < currentMonth.length; i++) {
       for (let j = 0; j < 7; j++) {
         const day = document.createElement('div');
@@ -369,7 +422,7 @@ class CalendarPrint {
           day.dataset.notCurrentMonth = currentMonth[i][j].notCurrentMonth;
           day.dataset.selectedDay = currentMonth[i][j].selectedDay;
           day.dataset.currentDay = currentMonth[i][j].currentDay;
-          day.style.fontSize = '14px';
+          day.style.fontSize = '14px'
           day.dataset.month = this.month;
           day.dataset.year = this.year;
           const numCurrMonth = new Date().getMonth();
@@ -391,31 +444,31 @@ class CalendarPrint {
         tableTbody.appendChild(day);
       }
     }
+  
     return tableTbody;
   }
 }
+
 
 const dateWrapper = document.querySelector('#date');
 dateWrapper.addEventListener('click', (e) => {
   e.stopPropagation();
   const calendar = document.querySelector('#calendar');
-  const inputDate = document.querySelector('#date');
+  const inputDate = document.querySelector('#date')
   const formChildren = document.querySelector('.header-people-wrapper');
 
   if (formChildren.style.display === 'block') formChildren.style.display = 'none';
-  console.log(formChildren.style.display);
 
-  if (calendar.style.display === 'none' && inputDate.value !== '') {
+  if (calendar.style.display === 'none' && inputDate.value !== "") {
     calendar.style.display = 'grid';
     generateSelectedDays();
   } else {
     calendar.style.display = 'grid';
 
     if (calendar.firstChild) return;
-    calendar.appendChild(new CalendarPrint(new Date().getMonth() 
-    + 1, new Date().getFullYear()).printMonth());
-    calendar.appendChild(new CalendarPrint(new Date().getMonth() 
-    + 2, new Date().getFullYear()).printMonth());
+
+    calendar.appendChild(new CalendarPrint(new Date().getMonth() + 1, new Date().getFullYear()).printMonth());
+    calendar.appendChild(new CalendarPrint(new Date().getMonth() + 2, new Date().getFullYear()).printMonth());
     dayClick();
   }
 }, true);
@@ -424,15 +477,13 @@ let checkInDay = 0;
 let checkInDayElement = '';
 let checkOutDay = 0;
 let checkOutDayElement = '';
-const dayClick = () => document.querySelectorAll('.calendar-day').forEach((element) => {
-  const dateInput = document.querySelector('#date');
+let countClick = 0;
+
+const dayClick = () => document.querySelectorAll('.calendar-day').forEach(element => {
+  let dateInput = document.querySelector('#date');
+
   element.addEventListener('click', (e) => {
     const currentElement = e.target;
-    const isElementThanThePrevious = (checkInDay === 0)
-    || (currentElement.dataset.dayOfMonth < checkInDay
-    && currentElement.dataset.month <= checkInDayElement.dataset.month)
-    || (currentElement.dataset.dayOfMonth > checkInDay
-    && currentElement.dataset.month < checkInDayElement.dataset.month);
 
     if (currentElement.dataset.irrelivantDay) return;
 
@@ -451,12 +502,16 @@ const dayClick = () => document.querySelectorAll('.calendar-day').forEach((eleme
       defaultStyleCalendar();
     }
 
+    const isElementThanThePrevious = (checkInDay === 0)
+    || (currentElement.dataset.dayOfMonth < checkInDay && currentElement.dataset.month <= checkInDayElement.dataset.month)
+    || (currentElement.dataset.dayOfMonth > checkInDay && currentElement.dataset.month < checkInDayElement.dataset.month);
+
     if (isElementThanThePrevious) {
       currentElement.dataset.checkInDay = true;
       currentElement.dataset.selectedDay = true;
-      currentElement.style = 'background-color: #3077C6; color: #fff';
+      currentElement.style = 'background-color: #3077C6; color: #fff;';
       checkInDay = +element.dataset.dayOfMonth;
-      if (checkInDayElement) checkInDayElement.style = 'background-color: #fff; color: #333333';
+      if (checkInDayElement) checkInDayElement.style = 'background-color: #fff; color: #33333;';
       if (checkInDayElement) checkInDayElement.dataset.checkInDay = false;
       if (checkInDayElement) checkInDayElement.dataset.selectedDay = false;
       checkInDayElement = currentElement;
@@ -467,9 +522,11 @@ const dayClick = () => document.querySelectorAll('.calendar-day').forEach((eleme
       currentElement.dataset.selectedDay = true;
       currentElement.style = 'background-color: #3077C6; color: #fff';
       checkOutDay = +element.dataset.dayOfMonth;
-      if (checkOutDayElement) checkOutDayElement.style = 'background-color: #fff; color: #333333';
+
+      if (checkOutDayElement) checkOutDayElement.style = 'background-color: #fff; color: #333333;';
       if (checkOutDayElement) checkOutDayElement.dataset.checkOutDay = false;
       if (checkOutDayElement) checkOutDayElement.dataset.selectedDay = false;
+      
       checkOutDayElement = currentElement;
       const calendar = document.querySelector('#calendar');
       const valueOut = element.dataset.dayOfMonth + '.' + element.dataset.month + '.' + element.dataset.year;
@@ -478,16 +535,12 @@ const dayClick = () => document.querySelectorAll('.calendar-day').forEach((eleme
     }
   });
 });
-
 function changeFormatDate(date) {
-
   const res = [];
-
   date.split('.').map((element) => {
-
     if (String(element).length === 1) {
-      const resIfNull = '0' + element;
-      element = resIfNull;
+      let res = '0' + element;
+      element = res;
     }
     res.push(element);
   });
@@ -495,7 +548,6 @@ function changeFormatDate(date) {
 }
 
 function generateSelectedDays() {
-
   document.querySelectorAll('.calendar-day').forEach((element) => {
     const elementOfDay = Number(element.dataset.dayOfMonth);
     const elementOfMonth = Number(element.dataset.month);
@@ -505,9 +557,7 @@ function generateSelectedDays() {
     && elementOfDay < checkOutDay && elementOfMonth === outMonth)
     || (inMonth < outMonth && ((elementOfDay > checkInDay && elementOfMonth === inMonth)
     || (elementOfDay < checkOutDay && elementOfMonth === outMonth)));
-
     if (isSelectedDay) {
-
       if (element.dataset.checkOutDay === true || element.dataset.checkInDay === true) return;
       element.style.backgroundColor = '#F3F3F4';
       element.dataset.selectedDay = true;
