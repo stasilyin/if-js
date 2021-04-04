@@ -232,6 +232,7 @@ const dellChildren = (event) => {
   if ((event.target.id === idDellAdultsBtn || event.target.id === idDellRoomsBtn) && (value > 0)) {
     event.target.nextSibling.innerHTML = --value;
   }
+  
   if (event.target.id === idDellChildrenBtn && value >= 1) {
     event.target.nextSibling.innerHTML = --value;
     generateSelect(event);
@@ -250,17 +251,16 @@ btnDelAll.forEach((element) => {
 
 Date.prototype.daysInMonth = function (year, month) {
   month -= 1;
-
   return 32 - new Date(year, month, 32).getDate();
 };
 
 Date.prototype.dayOfWeek = function (year, month) {
   month -= 1;
-  let firstDay = (new Date(year, month, 1));
-  let firstDayWeek = firstDay.getDay();
+  const firstDay = (new Date(year, month, 1));
+  const firstDayWeek = firstDay.getDay();
   let t = firstDayWeek - 1;
 
-  if ( t < 0 ) {
+  if (t < 0) {
     t = 6;
   }
 
@@ -272,7 +272,7 @@ class Calendar {
   }
   getCurrMonth() {
     try {
-      let { daysInMonth, daysInWeek, dayOfWeek, checkInDay, checkOutDay } = this.dataMonth;
+      const { daysInMonth, daysInWeek, dayOfWeek, checkInDay, checkOutDay } = this.dataMonth;
 
       if (dayOfWeek > daysInWeek) throw new Error('День начала недели больше количества дней в неделе');
 
@@ -317,7 +317,6 @@ class Calendar {
             if (result[i][j].dayOfMonth === daysInMonth) {
               return true;
             }
-          
           }
         }
         return false;
@@ -339,7 +338,6 @@ class Calendar {
             result[i].push(day);
             countDays++;
           }
-        
         }
       }
 
@@ -376,17 +374,18 @@ class Calendar {
 }
 
 class CalendarPrint {
-  constructor (month, year) {
+  constructor(month, year) {
     this.month = month;
     this.year = year;
   }
-  printMonth () {
+
+  printMonth() {
 
     const getObjectMonth = {
-      daysInMonth: new Date().daysInMonth(this.year,this.month),
+      daysInMonth: new Date().daysInMonth(this.year, this.month),
       daysInWeek: 7,
       dayOfWeek: new Date().dayOfWeek(this.year, this.month),
-    }
+    };
     const currentMonth = new Calendar(getObjectMonth).getCurrMonth();
     const tableTbody = document.createElement('div');
     const tableCaption = document.createElement('div');
@@ -400,7 +399,6 @@ class CalendarPrint {
     tableCaption.classList.add('headerCalen');
     tableCaption.innerHTML = monthes[new Date(this.year, this.month).getMonth() - 1] + ' ' + this.year;
     tableTbody.appendChild(tableCaption);
-    
     while (rowsTabelWeekCount < daysWeek.length) {
       const rowsTableWeek = document.createElement('div');
       rowsTableWeek.innerHTML = daysWeek[rowsTabelWeekCount];
@@ -408,7 +406,7 @@ class CalendarPrint {
       tableTbody.appendChild(rowsTableWeek);
       rowsTabelWeekCount++;
     }
-                                      
+                      
     for (let i = 0; i < currentMonth.length; i++) {
       for (let j = 0; j < 7; j++) {
         const day = document.createElement('div');
@@ -422,7 +420,7 @@ class CalendarPrint {
           day.dataset.notCurrentMonth = currentMonth[i][j].notCurrentMonth;
           day.dataset.selectedDay = currentMonth[i][j].selectedDay;
           day.dataset.currentDay = currentMonth[i][j].currentDay;
-          day.style.fontSize = '14px'
+          day.style.fontSize = '14px';
           day.dataset.month = this.month;
           day.dataset.year = this.year;
           const numCurrMonth = new Date().getMonth();
@@ -444,22 +442,20 @@ class CalendarPrint {
         tableTbody.appendChild(day);
       }
     }
-  
     return tableTbody;
   }
 }
-
 
 const dateWrapper = document.querySelector('#date');
 dateWrapper.addEventListener('click', (e) => {
   e.stopPropagation();
   const calendar = document.querySelector('#calendar');
-  const inputDate = document.querySelector('#date')
+  const inputDate = document.querySelector('#date');
   const formChildren = document.querySelector('.header-people-wrapper');
 
   if (formChildren.style.display === 'block') formChildren.style.display = 'none';
 
-  if (calendar.style.display === 'none' && inputDate.value !== "") {
+  if (calendar.style.display === 'none' && inputDate.value !== '') {
     calendar.style.display = 'grid';
     generateSelectedDays();
   } else {
@@ -467,8 +463,10 @@ dateWrapper.addEventListener('click', (e) => {
 
     if (calendar.firstChild) return;
 
-    calendar.appendChild(new CalendarPrint(new Date().getMonth() + 1, new Date().getFullYear()).printMonth());
-    calendar.appendChild(new CalendarPrint(new Date().getMonth() + 2, new Date().getFullYear()).printMonth());
+    calendar.appendChild(new CalendarPrint(new Date().getMonth()
+    + 1, new Date().getFullYear()).printMonth());
+    calendar.appendChild(new CalendarPrint(new Date().getMonth()
+    + 2, new Date().getFullYear()).printMonth());
     dayClick();
   }
 }, true);
@@ -477,10 +475,9 @@ let checkInDay = 0;
 let checkInDayElement = '';
 let checkOutDay = 0;
 let checkOutDayElement = '';
-let countClick = 0;
 
-const dayClick = () => document.querySelectorAll('.calendar-day').forEach(element => {
-  let dateInput = document.querySelector('#date');
+const dayClick = () => document.querySelectorAll('.calendar-day').forEach((element) => {
+  const dateInput = document.querySelector('#date');
 
   element.addEventListener('click', (e) => {
     const currentElement = e.target;
@@ -503,8 +500,10 @@ const dayClick = () => document.querySelectorAll('.calendar-day').forEach(elemen
     }
 
     const isElementThanThePrevious = (checkInDay === 0)
-    || (currentElement.dataset.dayOfMonth < checkInDay && currentElement.dataset.month <= checkInDayElement.dataset.month)
-    || (currentElement.dataset.dayOfMonth > checkInDay && currentElement.dataset.month < checkInDayElement.dataset.month);
+    || (currentElement.dataset.dayOfMonth < checkInDay
+    && currentElement.dataset.month <= checkInDayElement.dataset.month)
+    || (currentElement.dataset.dayOfMonth > checkInDay
+    && currentElement.dataset.month < checkInDayElement.dataset.month);
 
     if (isElementThanThePrevious) {
       currentElement.dataset.checkInDay = true;
@@ -526,7 +525,6 @@ const dayClick = () => document.querySelectorAll('.calendar-day').forEach(elemen
       if (checkOutDayElement) checkOutDayElement.style = 'background-color: #fff; color: #333333;';
       if (checkOutDayElement) checkOutDayElement.dataset.checkOutDay = false;
       if (checkOutDayElement) checkOutDayElement.dataset.selectedDay = false;
-      
       checkOutDayElement = currentElement;
       const calendar = document.querySelector('#calendar');
       const valueOut = element.dataset.dayOfMonth + '.' + element.dataset.month + '.' + element.dataset.year;
@@ -539,8 +537,8 @@ function changeFormatDate(date) {
   const res = [];
   date.split('.').map((element) => {
     if (String(element).length === 1) {
-      let res = '0' + element;
-      element = res;
+      const resIfNull = '0' + element;
+      element = resIfNull;
     }
     res.push(element);
   });
