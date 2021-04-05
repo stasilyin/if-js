@@ -5,7 +5,8 @@
   "main": "main.js",
   "scripts": {
     "test": "jest",
-    "lint": "eslint main.js"
+    "lint": "eslint main.js",
+    "lint:fix": "eslint --fix --ext main.js"
   },
   "repository": {
     "type": "git",

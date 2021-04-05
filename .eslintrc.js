@@ -14,5 +14,8 @@ module.exports = {
     'prefer-template': "warn",
     'prefer-destructuring':'warn',
     'no-param-reassign':'warn',
+    'object-curly-newline': 0,
+    'no-else-return': 0,
+    'no-use-before-define': 0,
   },
 };

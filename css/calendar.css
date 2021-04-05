@@ -27,10 +27,9 @@
   margin-top: 12px;
   margin-left: 35%;
   padding-top: 12px;
-  /* padding-left: 23px;
-  padding-right: 23px; */
   padding-bottom: 18px;
   text-align: center;
+  z-index: 1;
 }
 .calendar-day {
   display: flex;
